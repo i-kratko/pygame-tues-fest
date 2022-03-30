@@ -3,6 +3,9 @@ import pygame
 from sys import exit
 import const
 
+
+
+
 class StateManager():
     def __init__(self):
         self.level = 1
