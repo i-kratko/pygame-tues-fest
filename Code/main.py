@@ -3,8 +3,7 @@ import pygame
 from sys import exit
 
 
-
-
+#bruh
 class StateManager():
     def __init__(self):
         self.level = 1
