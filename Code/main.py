@@ -1,9 +1,7 @@
 from turtle import width
 import pygame
 from sys import exit
-
-
-
+import const
 
 class StateManager():
     def __init__(self):
@@ -25,7 +23,7 @@ class StateManager():
             screen.blit(test_surface,(0,0))
 
             pygame.display.update()
-            clock.tick(60)
+            clock.tick(const.FPS)
 
     def stateManager(self):
         if self.level == 1:
@@ -33,8 +31,8 @@ class StateManager():
 
 #innit
 pygame.init()
-screen = pygame.display.set_mode((800, 400))
-pygame.display.set_caption('Test')
+screen = pygame.display.set_mode((const.disW, const.disH))
+pygame.display.set_caption(const.gameName)
 clock = pygame.time.Clock()
      
 stateManager = StateManager()
