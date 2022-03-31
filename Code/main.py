@@ -39,7 +39,7 @@ class StateManager():
         #TODO: change the background
 
         bg = pygame.Surface((800,600))
-        bg.fill('White')
+        bg.fill(const.black)
 
         while not gameOver:
             for event in pygame.event.get():
