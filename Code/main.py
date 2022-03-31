@@ -7,8 +7,8 @@ class StateManager():
     def __init__(self):
         self.level = 1
 
-    #TODO: adekvatno ime
-    def start(self):
+    #main menu
+    def mainMenu(self):
         gameOver = False
 
         test_surface = pygame.Surface((200,300))
@@ -25,9 +25,22 @@ class StateManager():
             pygame.display.update()
             clock.tick(const.FPS)
 
+    #game loop
+    def game():
+        gameOver = False
+
+        while not gameOver:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+
+        pygame.display.update()
+        clock.tick(const.FPS)
+
     def stateManager(self):
         if self.level == 1:
-            self.start()
+            self.mainMenu()
 
 #innit
 pygame.init()
