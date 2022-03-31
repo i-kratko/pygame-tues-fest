@@ -24,6 +24,7 @@ class Player(pygame.sprite.Sprite):
     #function to handle player movement
     def update(self):
         self.velX = 0
+        self.velY = 0
 
         #checking for horizontal input
         if self.leftPressed and not self.rightPressed:

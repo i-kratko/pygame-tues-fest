@@ -36,14 +36,40 @@ class StateManager():
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
 
+        #TODO: change the background
+
+        bg = pygame.Surface((800,600))
+        bg.fill('White')
+
         while not gameOver:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
+                #KEYDOWN EVENTS
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_a:
+                        player.leftPressed = True
+                    if event.key == pygame.K_d:
+                        player.rightPressed = True
+                    if event.key == pygame.K_w:
+                        player.upPressed = True
+                    if event.key == pygame.K_s:
+                        player.downPressed = True
+                #KEYUP EVENTS
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_a:
+                        player.leftPressed = False
+                    if event.key == pygame.K_d:
+                        player.rightPressed = False
+                    if event.key == pygame.K_w:
+                        player.upPressed = False
+                    if event.key == pygame.K_s:
+                        player.downPressed = False
 
             player.update()
 
+            display.blit(bg, (0, 0))
             display.blit(player.image,(player.rect.x, player.rect.y))
 
             pygame.display.update()
