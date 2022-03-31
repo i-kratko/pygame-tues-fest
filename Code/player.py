@@ -4,8 +4,8 @@ import const
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, spritePath):
-        super.__init__()
-        self.image = pygame.image.load(spritePath).convert_alpha()
+        super().__init__()
+        self.image = pygame.image.load(spritePath)
         self.rect = self.image.get_rect()
         self.x = int(x)
         self.y = int(y)
