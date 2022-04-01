@@ -49,6 +49,11 @@ class Player(pygame.sprite.Sprite):
 
         #dont allow player to go out of the screen
         if self.rect.x + 32 > 799:
-            self.rect.x = 799 - 32
-        if  self.rect.x <= 1:
-            self.rect.x += 1
+            self.rect.x = 799 - 42
+        if  self.rect.x  < 1:
+            self.rect.x = 1
+
+        if self.rect.y + 32 > 399:
+            self.rect.y = 399 - 42
+        if  self.rect.y  < 1:
+            self.rect.y = 1
