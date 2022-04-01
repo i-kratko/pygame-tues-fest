@@ -9,12 +9,10 @@ class StateManager():
     def __init__(self):
         self.level = 1
 
-    #main menu
-    def mainMenu(self):
         gameOver = False
 
         test_surface = pygame.Surface((200,300))
-        test_surface.fill('Blue')
+        #test_surface.fill('Blue')
 
         while not gameOver:
             for event in pygame.event.get():
@@ -88,6 +86,10 @@ clock = pygame.time.Clock()
      
 stateManager = StateManager()
 
+
+def main_menu():
+
+    
 #gameloop
 def gameLoop():
     while True:
