@@ -9,6 +9,8 @@ class StateManager():
     def __init__(self):
         self.level = 1
 
+
+    def mainMenu():
         gameOver = False
 
         test_surface = pygame.Surface((200,300))
@@ -85,10 +87,6 @@ pygame.display.set_caption(const.gameName)
 clock = pygame.time.Clock()
      
 stateManager = StateManager()
-
-
-def main_menu():
-
     
 #gameloop
 def gameLoop():
