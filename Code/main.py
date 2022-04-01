@@ -10,19 +10,24 @@ class StateManager():
         self.level = 1
 
 
-    def mainMenu():
+    #TODO: main menu
+    def mainMenu(self):
         gameOver = False
 
-        test_surface = pygame.Surface((200,300))
-        #test_surface.fill('Blue')
+        bgSurface = pygame.Surface((800,600))
+        bgSurface.fill('Blue')
 
         while not gameOver:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.level = 2
+                        self.stateManager()
 
-            display.blit(test_surface,(0,0))
+            display.blit(bgSurface,(0,0))
 
             pygame.display.update()
             clock.tick(const.FPS)
@@ -77,7 +82,8 @@ class StateManager():
 
     def stateManager(self):
         if self.level == 1:
-            #TODO: change strating scene to main menu
+            self.mainMenu()
+        if self.level == 2:
             self.game()
 
 #innit
