@@ -42,18 +42,22 @@ class Player(pygame.sprite.Sprite):
         if self.downPressed and not self.upPressed:
             self.velY += self.speed
 
+        #dont allow player to go out of the screen
+        if self.rect.x + 32 > 799:
+            self.x -= 10
+            self.velX = 0
+        if  self.rect.x  < 1:
+            self.x += 10
+            self.velX = 0
+
+        if self.rect.y + 32 > 399:
+            self.y -= 10
+            self.velY = 0
+        if  self.rect.y  < 1:
+            self.y += 10
+            self.velY = 0
+
         self.x += self.velX
         self.y += self.velY
 
-        self.rect = pygame.Rect(int(self.x), int(self.y), 32, 32)
-
-        #dont allow player to go out of the screen
-        if self.rect.x + 32 > 799:
-            self.rect.x = 799 - 34
-        if  self.rect.x  < 1:
-            self.rect.x = 1
-
-        if self.rect.y + 32 > 399:
-            self.rect.y = 399 - 34
-        if  self.rect.y  < 1:
-            self.rect.y = 1
+        self.rect = pygame.Rect(int(self.x), int(self.y), 32, 32)        
