@@ -65,7 +65,7 @@ class StateManager():
         gameOver = False
 
         #creating the player
-        player = Player(0, 0, const.playerSpritePath)
+        player = Player(10, 10, const.playerSpritePath)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
 
