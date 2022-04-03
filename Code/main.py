@@ -100,6 +100,10 @@ class StateManager():
                             print("BRUH")
                             self.level = 2
                             self.stateManager()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        exit()
 
 
             display.blit(bgSurface,(0,0))
@@ -139,6 +143,10 @@ class StateManager():
                         player.upPressed = True
                     if event.key == pygame.K_s:
                         player.downPressed = True
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            pygame.quit()
+                            exit()
                 #KEYUP EVENTS
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_a:
@@ -166,7 +174,7 @@ class StateManager():
 
 #innit
 pygame.init()
-display = pygame.display.set_mode((const.disW, const.disH))
+display = pygame.display.set_mode((const.disW, const.disH), pygame.FULLSCREEN)
 pygame.display.set_caption(const.gameName)
 clock = pygame.time.Clock()
      
