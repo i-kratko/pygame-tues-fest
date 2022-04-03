@@ -6,6 +6,7 @@ from player import Player
 from button import Button
 
 
+
 def get_font(size): # Returns Press-Start-2P in the desired size
         return pygame.font.Font("Graphics/font.ttf", size)
 
