@@ -8,3 +8,4 @@ black = [0, 0, 0]
 white = [255, 255, 255]
 ##### SPRITE PATHS #####
 playerSpritePath = "Graphics\PlayerSprite.png"
+backgroundPath = ("Graphics/backgrounds/bryh.webp")
