@@ -96,10 +96,15 @@ class StateManager():
                     pygame.quit()
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                            print("BRUH")
-                            self.level = 2
-                            self.stateManager()
+                    pos = pygame.mouse.get_pos()
+                    #if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                            #print("BRUH")
+                            #self.level = 2
+                            #self.stateManager()
+                    if PLAY_BUTTON.rect.collidepoint(pos):
+                        print("BRUH")
+                        self.level = 2
+                        self.stateManager()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         pygame.quit()
