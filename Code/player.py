@@ -3,7 +3,7 @@ from pygame import sprite
 import const
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, spritePath):
+    def __init__(self, x, y, spritePath, blood):
         super().__init__()
         self.image = pygame.image.load(spritePath)
         self.rect = self.image.get_rect()
@@ -20,6 +20,7 @@ class Player(pygame.sprite.Sprite):
         self.facingUp = False
         self.facingDown = False
         self.speed = 10
+        self.blood = 100
 
     #function to handle player movement
     def update(self):
