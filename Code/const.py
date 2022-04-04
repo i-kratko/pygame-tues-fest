@@ -22,5 +22,5 @@ backButtonPath = "Graphics/backbutton.png"
 backgroundPath = "Graphics/backgrounds/ne.png"
 gameBackgroundPath = "Graphics/GameBackground.png"
 platformSpritePath = "Graphics/Platfrom.png"
-floorPath="Graphics/backgrounds/zemq.png"
+floorPath="Graphics/loop.png"
 ##### BUTTON SPRITES ######

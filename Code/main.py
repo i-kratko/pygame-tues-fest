@@ -116,6 +116,7 @@ class StateManager():
 
         background = pygame.image.load(const.gameBackgroundPath)
         bgScaled = pygame.transform.scale(background, (800, 600))
+        floor_surface= pygame.image.load(const.floorPath)
 
         #creating the player
         player = Player(10, 10, const.playerSpritePath, 100)
@@ -132,7 +133,10 @@ class StateManager():
         def display_blood():
             blood_surface=blood_font.render(f'Health:{int(player.blood)}', True, const.red_blood)
             blood_rect = blood_surface.get_rect(center=(110, 80))
-            display.blit(blood_surface, blood_rect)   
+            display.blit(blood_surface, blood_rect)
+        def draw_floor():
+            display.blit(floor_surface, (const.floor_x_position, 450))
+            display.blit(floor_surface, (const.floor_x_position+800, 450))   
         #sounds 
         bryh_sound=pygame.mixer.Sound(const.bryhsound)
 
@@ -192,9 +196,13 @@ class StateManager():
                 display.blit(trigger.trigger, (trigger.x, trigger.y))
             display.blit(player.image,(player.rect.x, player.rect.y))
             display_score()
-            display_blood()
             score+=0.04
-
+            display_blood()
+            const.floor_x_position-=1
+            draw_floor()
+            if const.floor_x_position<=-800:
+                const.floor_x_position=0
+            
             pygame.display.update()
             #bruh
             clock.tick(const.FPS)
