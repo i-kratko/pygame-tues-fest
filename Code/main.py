@@ -132,7 +132,6 @@ class StateManager():
                         player.upPressed = False
                     if event.key == pygame.K_SPACE and const.isJumped == False:
                         jumpingTimer -= 1
-                        const.playerMovement = 0
                         const.playerMovement -= 30
                         const.isJumped = True
                     
