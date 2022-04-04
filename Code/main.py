@@ -134,6 +134,7 @@ class StateManager():
             score+=0.04
 
             pygame.display.update()
+            #bruh
             clock.tick(const.FPS)
 
     def stateManager(self):
