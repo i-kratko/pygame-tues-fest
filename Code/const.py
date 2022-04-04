@@ -15,6 +15,7 @@ bryhsound = "Audio/bryh.wav"
 ##### SPRITE PATHS #####
 playerSpritePath = "Graphics\PlayerSprite.png"
 playButtonPath = "Graphics/playbutton.png"
+optionsButtonPath = "Graphics/optionsbutton"
 backgroundPath = "Graphics/backgrounds/ne.png"
 gameBackgroundPath = "Graphics/GameBackground.png"
 platformSpritePath = "Graphics/Platfrom.png"

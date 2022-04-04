@@ -17,7 +17,25 @@ class StateManager():
     def __init__(self):
         self.level = 1
 
-    #TODO: main menu
+    def options(self):
+        gameOver = False
+
+        bgSurface = pygame.Surface((800,600))
+        bgSurface.fill('Orange')
+
+        while not gameOver:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+
+            display.blit(bgSurface,(0,0))
+            #display.blit(OPTIONS_BUTTON.image, (125, 150))
+            #display.blit(QUIT_BUTTON.image, (230, 250))
+
+            pygame.display.update()
+            clock.tick(const.FPS)
+
     def mainMenu(self):
         gameOver = False
 
@@ -26,12 +44,11 @@ class StateManager():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = get_font(75).render("MAIN MENU", True, "#ffb700")
+        MENU_TEXT = get_font(69).render("MAIN MENU", True, "#ffb700")
         MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
 
         PLAY_BUTTON = Button(300, 200, const.playButtonPath)
-        #OPTIONS_BUTTON = Button(None, pos=(640, 400), text_input="OPTIONS", font=get_font(75), base_color="#d7fcd4", hovering_color="Green")
-        #QUIT_BUTTON = Button(None, pos=(640, 550), text_input="QUIT", font=get_font(75), base_color="#d7fcd4", hovering_color="Green")
+        OPTIONS_BUTTON = Button(500,400, const.optionsButtonPath)
         
         buttonGroup = pygame.sprite.Group()
 
@@ -57,8 +74,55 @@ class StateManager():
 
 
             display.blit(bgSurface,(0,0))
-            display.blit(MENU_TEXT, (10, 20))
-            display.blit(PLAY_BUTTON.image, (300, 200))
+            display.blit(MENU_TEXT, (85, 20))
+            display.blit(PLAY_BUTTON.image, (280, 150))
+            #display.blit(OPTIONS_BUTTON.image, (125, 150))
+            #display.blit(QUIT_BUTTON.image, (230, 250))
+
+            pygame.display.update()
+            clock.tick(const.FPS)
+
+
+    #TODO: main menu
+    def mainMenu(self):
+        gameOver = False
+
+        bgSurface = pygame.Surface((800,600))
+        bgSurface.fill('Blue')
+
+        MENU_MOUSE_POS = pygame.mouse.get_pos()
+
+        MENU_TEXT = get_font(69).render("MAIN MENU", True, "#ffb700")
+        MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
+
+        PLAY_BUTTON = Button(300, 200, const.playButtonPath)
+        
+        buttonGroup = pygame.sprite.Group()
+
+        while not gameOver:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    #if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                            #print("BRUH")
+                            #self.level = 2
+                            #self.stateManager()
+                    if PLAY_BUTTON.rect.collidepoint(pos):
+                        print("BRUH")
+                        self.level = 2
+                        self.stateManager()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        exit()
+
+
+            display.blit(bgSurface,(0,0))
+            display.blit(MENU_TEXT, (85, 20))
+            display.blit(PLAY_BUTTON.image, (280, 150))
             #display.blit(OPTIONS_BUTTON.image, (125, 150))
             #display.blit(QUIT_BUTTON.image, (230, 250))
 
@@ -158,6 +222,8 @@ class StateManager():
             self.mainMenu()
         if self.level == 2:
             self.game()
+        if self.level == 3:
+            self.options()
 
 #innit
 pygame.mixer.pre_init(frequency=44100, size=16, channels=1, buffer=256)
