@@ -76,16 +76,21 @@ class StateManager():
         bgScaled = pygame.transform.scale(background, (800, 600))
 
         #creating the player
-        player = Player(10, 10, const.playerSpritePath)
+        player = Player(10, 10, const.playerSpritePath, 100)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
         #score
         score = 0
         score_font = get_font(20)
+        blood_font = get_font(20)
         def display_score():
             score_surface=score_font.render(f'Score:{int(score)}', True, const.white)
-            score_rect=score_surface.get_rect(center=(700, 100))
+            score_rect=score_surface.get_rect(center=(700, 80))
             display.blit(score_surface, score_rect)
+        def display_blood():
+            blood_surface=blood_font.render(f'blood:{int(player.blood)}', True, const.red_blood)
+            blood_rect = blood_surface.get_rect(center=(90, 80))
+            display.blit(blood_surface, blood_rect)   
         #sounds 
         bryh_sound=pygame.mixer.Sound(const.bryhsound)
 
@@ -143,6 +148,7 @@ class StateManager():
             display.blit(bgScaled, (0, 0))
             display.blit(player.image,(player.rect.x, player.rect.y))
             display_score()
+            display_blood()
             score+=0.04
 
             pygame.display.update()

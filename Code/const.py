@@ -9,6 +9,7 @@ isJumped = False
 ##### COLORS #####
 black = [0, 0, 0]
 white = [255, 255, 255]
+red_blood=[102, 0, 0]
 ##### AUDIO PATHS #####
 bryhsound = "Audio/bryh.wav" 
 ##### SPRITE PATHS #####
