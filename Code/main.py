@@ -47,7 +47,7 @@ class StateManager():
         MENU_TEXT = get_font(69).render("MAIN MENU", True, "#ffb700")
         MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
 
-        PLAY_BUTTON = Button(300, 200, const.playButtonPath)
+        PLAY_BUTTON = Button(280, 150, const.playButtonPath)
         OPTIONS_BUTTON = Button(500,400, const.optionsButtonPath)
         
         buttonGroup = pygame.sprite.Group()
