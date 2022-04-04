@@ -119,7 +119,7 @@ class StateManager():
         floor_surface= pygame.image.load(const.floorPath)
 
         #creating the player
-        player = Player(10, 10, const.playerSpritePath, 100)
+        player = Player(10, 408, const.playerSpritePath, 100)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
         #score
@@ -188,7 +188,8 @@ class StateManager():
                     jumpingTimer = 120
 
             player.update()
-            const.playerMovement += const.gravity
+            if player.rect.bottom>450:
+                const.playerMovement += const.gravity
             player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
             #blit triggers
