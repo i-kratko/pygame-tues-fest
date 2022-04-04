@@ -128,6 +128,12 @@ class StateManager():
         player = Player(10, 10, const.playerSpritePath)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
+        score = 0
+        score_font = get_font(20)
+        def display_score():
+            score_surface=score_font.render(f'Score:{int(score)}', True, const.white)
+            score_rect=score_surface.get_rect(center=(700, 100))
+            display.blit(score_surface, score_rect)
 
         #TODO: change the background
 
@@ -168,6 +174,8 @@ class StateManager():
 
             display.blit(bg, (0, 0))
             display.blit(player.image,(player.rect.x, player.rect.y))
+            display_score()
+            score+=0.04
 
             pygame.display.update()
             clock.tick(const.FPS)
