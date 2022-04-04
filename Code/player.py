@@ -50,7 +50,7 @@ class Player(pygame.sprite.Sprite):
             self.x += 10
             self.velX = 0
 
-        if self.rect.y + 32 > 399:
+        if self.rect.y + 32 > 599:
             self.y -= 10
             self.velY = 0
         if  self.rect.y  < 1:
