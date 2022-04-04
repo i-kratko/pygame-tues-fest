@@ -135,6 +135,7 @@ class StateManager():
                 jumpingTimer -= 1
                 if jumpingTimer == 0:
                     const.isJumped = False
+                    jumpingTimer = 120
 
             player.update()
             const.playerMovement += const.gravity
