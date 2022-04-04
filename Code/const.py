@@ -3,6 +3,9 @@ disW = 800
 disH = 400
 gameName = "Game"
 FPS = 60
+playerMovement = 0
+gravity = 0.5
+isJumped = False
 ##### COLORS #####
 black = [0, 0, 0]
 white = [255, 255, 255]

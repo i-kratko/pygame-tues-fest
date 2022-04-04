@@ -123,11 +123,15 @@ class StateManager():
                         player.rightPressed = False
                     if event.key == pygame.K_w:
                         player.upPressed = False
-                    if event.key == pygame.K_s:
-                        player.downPressed = False
+                    if event.key == pygame.K_SPACE and const.isJumped == False:
+                        const.playerMovement = 0
+                        const.playerMovement -= 30
+                        const.isJumped = True
+                    
 
             player.update()
-
+            const.playerMovement += const.gravity
+            player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
             display.blit(player.image,(player.rect.x, player.rect.y))
             display_score()
