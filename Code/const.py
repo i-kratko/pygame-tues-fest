@@ -14,6 +14,7 @@ red_blood=[102, 0, 0]
 bryhsound = "Audio/bryh.wav" 
 ##### SPRITE PATHS #####
 playerSpritePath = "Graphics\PlayerSprite.png"
+playButtonPath = "Graphics/playbutton.png"
 backgroundPath = "Graphics/backgrounds/ne.png"
 gameBackgroundPath = "Graphics/GameBackground.png"
 platformSpritePath = "Graphics/Platfrom.png"
