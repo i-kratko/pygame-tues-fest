@@ -90,7 +90,11 @@ class StateManager():
         def display_blood():
             blood_surface=blood_font.render(f'blood:{int(player.blood)}', True, const.red_blood)
             blood_rect = blood_surface.get_rect(center=(90, 80))
-            display.blit(blood_surface, blood_rect)   
+            display.blit(blood_surface, blood_rect) 
+        def draw_floor():
+            display.blit(floor_surface, (const.floor_x_position, 450))
+            display.blit(floor_surface, (const.floor_x_position+800, 450))
+
         #sounds 
         bryh_sound=pygame.mixer.Sound(const.bryhsound)
 
@@ -98,6 +102,7 @@ class StateManager():
 
         bg = pygame.Surface((800,600))
         bg = pygame.image.load(const.backgroundPath)
+        floor_surface= pygame.image.load(const.floorPath)
 
         while not gameOver:
             for event in pygame.event.get():
@@ -147,6 +152,8 @@ class StateManager():
             player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
             display.blit(player.image,(player.rect.x, player.rect.y))
+            const.floor_x_position-=1
+            draw_floor()
             display_score()
             display_blood()
             score+=0.04
