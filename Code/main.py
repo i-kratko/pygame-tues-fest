@@ -70,6 +70,8 @@ class StateManager():
     def game(self):
         gameOver = False
 
+        jumpingTimer = 120
+
         background = pygame.image.load(const.gameBackgroundPath)
         bgScaled = pygame.transform.scale(background, (800, 600))
 
@@ -124,10 +126,15 @@ class StateManager():
                     if event.key == pygame.K_w:
                         player.upPressed = False
                     if event.key == pygame.K_SPACE and const.isJumped == False:
+                        jumpingTimer -= 1
                         const.playerMovement = 0
                         const.playerMovement -= 30
                         const.isJumped = True
                     
+            if const.isJumped:
+                jumpingTimer -= 1
+                if jumpingTimer == 0:
+                    const.isJumped = False
 
             player.update()
             const.playerMovement += const.gravity
