@@ -10,3 +10,4 @@ white = [255, 255, 255]
 playerSpritePath = "Graphics\PlayerSprite.png"
 backgroundPath = ("Graphics/backgrounds/ne.png")
 bryhsound = ("Audio/bryh.wav")
+##### BUTTON SPRITES ######
