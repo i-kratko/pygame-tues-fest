@@ -26,14 +26,16 @@ class StateManager():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = get_font(75).render("MAIN MENU", True, "#ffb700")
+        MENU_TEXT = get_font(100).render("MAIN MENU", True, "#b68f40")
         MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
 
-        PLAY_BUTTON = Button(300, 200, const.playButtonPath)
+        PLAY_BUTTON = Button(230, 50, const.playerSpritePath)
         #OPTIONS_BUTTON = Button(None, pos=(640, 400), text_input="OPTIONS", font=get_font(75), base_color="#d7fcd4", hovering_color="Green")
         #QUIT_BUTTON = Button(None, pos=(640, 550), text_input="QUIT", font=get_font(75), base_color="#d7fcd4", hovering_color="Green")
         
         buttonGroup = pygame.sprite.Group()
+
+        display.blit(MENU_TEXT, (0, 0))
 
         while not gameOver:
             for event in pygame.event.get():
@@ -57,8 +59,7 @@ class StateManager():
 
 
             display.blit(bgSurface,(0,0))
-            display.blit(MENU_TEXT, (10, 20))
-            display.blit(PLAY_BUTTON.image, (300, 200))
+            display.blit(PLAY_BUTTON.image, (230, 50))
             #display.blit(OPTIONS_BUTTON.image, (125, 150))
             #display.blit(QUIT_BUTTON.image, (230, 250))
 
@@ -87,9 +88,14 @@ class StateManager():
             score_rect=score_surface.get_rect(center=(700, 80))
             display.blit(score_surface, score_rect)
         def display_blood():
-            blood_surface=blood_font.render(f'Health:{int(player.blood)}', True, const.red_blood)
-            blood_rect = blood_surface.get_rect(center=(110, 80))
+            blood_surface=blood_font.render(f'blood:{int(player.blood)}', True, const.red_blood)
+            blood_rect = blood_surface.get_rect(center=(90, 80))
             display.blit(blood_surface, blood_rect)   
+            display.blit(blood_surface, blood_rect) 
+        def draw_floor():
+            display.blit(floor_surface, (const.floor_x_position, 450))
+            display.blit(floor_surface, (const.floor_x_position+800, 450))
+
         #sounds 
         bryh_sound=pygame.mixer.Sound(const.bryhsound)
 
@@ -97,6 +103,7 @@ class StateManager():
 
         bg = pygame.Surface((800,600))
         bg = pygame.image.load(const.backgroundPath)
+        floor_surface= pygame.image.load(const.floorPath)
 
         while not gameOver:
             for event in pygame.event.get():
@@ -105,10 +112,6 @@ class StateManager():
                     exit()
                 #KEYDOWN EVENTS
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE and const.isJumped == False:
-                        jumpingTimer -= 1
-                        const.playerMovement -= 89
-                        const.isJumped = True
                     if event.key == pygame.K_a:
                         player.leftPressed = True
                         bryh_sound.play()
@@ -133,6 +136,11 @@ class StateManager():
                         player.rightPressed = False
                     if event.key == pygame.K_w:
                         player.upPressed = False
+                    if event.key == pygame.K_SPACE and const.isJumped == False:
+                        jumpingTimer -= 1
+                        const.playerMovement = 0
+                        const.playerMovement -= 30
+                        const.isJumped = True
                     
             if const.isJumped:
                 jumpingTimer -= 1
@@ -145,6 +153,8 @@ class StateManager():
             player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
             display.blit(player.image,(player.rect.x, player.rect.y))
+            const.floor_x_position-=1
+            draw_floor()
             display_score()
             display_blood()
             score+=0.04
