@@ -70,6 +70,9 @@ class StateManager():
     def game(self):
         gameOver = False
 
+        background = pygame.image.load(const.gameBackgroundPath)
+        bgScaled = pygame.transform.scale(background, (800, 600))
+
         #creating the player
         player = Player(10, 10, const.playerSpritePath)
         playerGroup = pygame.sprite.Group()
@@ -125,7 +128,7 @@ class StateManager():
 
             player.update()
 
-            display.blit(bg, (0, 0))
+            display.blit(bgScaled, (0, 0))
             display.blit(player.image,(player.rect.x, player.rect.y))
             display_score()
             score+=0.04
