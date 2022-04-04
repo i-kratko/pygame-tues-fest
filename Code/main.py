@@ -4,7 +4,7 @@ from sys import exit
 import const
 from player import Player
 from button import Button
-
+from trigger import Trigger
 
 
 def get_font(size): # Returns Press-Start-2P in the desired size
@@ -109,6 +109,11 @@ class StateManager():
 
         jumpingTimer = 120
 
+        #triggers
+        testTrigger = Trigger(730, 550, 20, 20)
+        triggerGroup = []
+        triggerGroup.append(testTrigger)
+
         background = pygame.image.load(const.gameBackgroundPath)
         bgScaled = pygame.transform.scale(background, (800, 600))
 
@@ -132,9 +137,6 @@ class StateManager():
         bryh_sound=pygame.mixer.Sound(const.bryhsound)
 
         #TODO: change the background
-
-        bg = pygame.Surface((800,600))
-        bg = pygame.image.load(const.backgroundPath)
 
         while not gameOver:
             for event in pygame.event.get():
@@ -171,6 +173,9 @@ class StateManager():
                         player.rightPressed = False
                     if event.key == pygame.K_w:
                         player.upPressed = False
+
+                if player.rect.colliderect(testTrigger.rect):
+                    testTrigger.action()
                     
             if const.isJumped:
                 jumpingTimer -= 1
@@ -182,6 +187,9 @@ class StateManager():
             const.playerMovement += const.gravity
             player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
+            #blit triggers
+            for trigger in triggerGroup:
+                display.blit(trigger.trigger, (trigger.x, trigger.y))
             display.blit(player.image,(player.rect.x, player.rect.y))
             display_score()
             display_blood()
