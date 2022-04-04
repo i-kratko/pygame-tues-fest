@@ -9,3 +9,4 @@ white = [255, 255, 255]
 ##### SPRITE PATHS #####
 playerSpritePath = "Graphics\PlayerSprite.png"
 backgroundPath = ("Graphics/backgrounds/ne.png")
+bryhsound = ("Audio/bryh.wav")

@@ -128,12 +128,15 @@ class StateManager():
         player = Player(10, 10, const.playerSpritePath)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
+        #score
         score = 0
         score_font = get_font(20)
         def display_score():
             score_surface=score_font.render(f'Score:{int(score)}', True, const.white)
             score_rect=score_surface.get_rect(center=(700, 100))
             display.blit(score_surface, score_rect)
+        #sounds 
+        bryh_sound=pygame.mixer.Sound(const.bryhsound)
 
         #TODO: change the background
 
@@ -149,12 +152,16 @@ class StateManager():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_a:
                         player.leftPressed = True
+                        bryh_sound.play()
                     if event.key == pygame.K_d:
                         player.rightPressed = True
+                        bryh_sound.play()
                     if event.key == pygame.K_w:
                         player.upPressed = True
+                        bryh_sound.play()
                     if event.key == pygame.K_s:
                         player.downPressed = True
+                        bryh_sound.play()
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
                             pygame.quit()
@@ -187,6 +194,7 @@ class StateManager():
             self.game()
 
 #innit
+pygame.mixer.pre_init(frequency=44100, size=16, channels=1, buffer=256)
 pygame.init()
 display = pygame.display.set_mode((const.disW, const.disH), pygame.FULLSCREEN)
 pygame.display.set_caption(const.gameName)
