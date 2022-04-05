@@ -3,7 +3,7 @@ from pygame import sprite
 import const
 
 class Boss(pygame.sprite.Sprite):
-    def __init__(self, x, y, spritePath, blood):
+    def __init__(self, x, y, spritePath, health):
         super().__init__()
         self.image = pygame.image.load(const.bossSpritePath)
         self.image.set_colorkey((255, 255, 255))
@@ -21,4 +21,4 @@ class Boss(pygame.sprite.Sprite):
         self.facingUp = False
         self.facingDown = False
         self.speed = 10
-        self.blood = 100
+        self.health = 100
