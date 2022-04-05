@@ -2,6 +2,7 @@ from pickle import TRUE
 import pygame
 import random
 from sys import exit
+from boss import Boss
 import const
 from player import Player
 from button import Button
@@ -122,10 +123,11 @@ class StateManager():
         platform_surface=pygame.transform.scale(platform_surface, (178, 52))
         platform_list=[]
         platform_height= [200, 300, 400, 500]
+        boss = Boss(300, 408, const.bossSpritePath, 100)
         spawn_platform=pygame.USEREVENT
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)
         #creating the player
-        player = Player(10, 408, const.playerSpritePath, 100)
+        player = Player(300, 408, const.playerSpritePath, 100)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
         #score
@@ -219,6 +221,7 @@ class StateManager():
             for trigger in triggerGroup:
                 display.blit(trigger.trigger, (trigger.x, trigger.y))
             display.blit(player.image,(player.rect.x, player.rect.y))
+            display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
             score+=0.04
             platform_list=move_platforms(platform_list) 

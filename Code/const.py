@@ -7,7 +7,7 @@ playerMovement = 0
 gravity = 0.5
 isJumped = False
 floor_x_position=0
-spawn_platform_time=2500
+spawn_platform_time=2000
 ##### COLORS #####
 black = [0, 0, 0]
 white = [255, 255, 255]
@@ -16,6 +16,7 @@ red_blood=[102, 0, 0]
 bryhsound = "Audio/bryh.wav" 
 ##### SPRITE PATHS #####
 playerSpritePath = "Graphics\PlayerSprite.png"
+bossSpritePath = "Graphics/Bosses/boss_4.png"
 playButtonPath = "Graphics/playbutton.png"
 optionsButtonPath = "Graphics/optionsbutton.png"
 quitButtonPath = "Graphics/quitbutton.png"

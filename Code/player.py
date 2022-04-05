@@ -21,6 +21,15 @@ class Player(pygame.sprite.Sprite):
         self.facingDown = False
         self.speed = 10
         self.blood = 100
+    def jump(self):
+        self.velX = 10
+        self.velY = 10
+        if const.isJumped is True:
+            self.y-=self.velY
+            self.velY-=1
+            if self.velY<-10:
+                jump=False
+                self.velY=10
 
     #function to handle player movement
     def update(self):
