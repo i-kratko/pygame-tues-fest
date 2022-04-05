@@ -163,13 +163,14 @@ class StateManager():
         #TODO: change the background
 
         while not gameOver:
+            player.collisionWIthFloor(floor_surface)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
                 #KEYDOWN EVENTS
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE and const.isJumped == False:
+                    if event.key == pygame.K_SPACE:
                         jumpingTimer -= 1
                         const.playerMovement -= 89
                         const.isJumped = True
@@ -178,12 +179,6 @@ class StateManager():
                         bryh_sound.play()
                     if event.key == pygame.K_d:
                         player.rightPressed = True
-                        bryh_sound.play()
-                    if event.key == pygame.K_w:
-                        player.upPressed = True
-                        bryh_sound.play()
-                    if event.key == pygame.K_s:
-                        player.downPressed = True
                         bryh_sound.play()
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
@@ -211,9 +206,6 @@ class StateManager():
                     jumpingTimer = 120
 
             player.update()
-            if player.rect.bottom>450:
-                const.playerMovement += const.gravity
-            player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
             #blit triggers
             for trigger in triggerGroup:
