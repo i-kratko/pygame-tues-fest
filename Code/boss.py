@@ -12,6 +12,8 @@ class Boss(pygame.sprite.Sprite):
         self.y = int(y)
         self.velX = 0
         self.velY = 0
+        self.rect.x = self.x
+        self.rect.y = self.y
         self.rightPressed = False
         self.leftPressed = False
         self.upPressed = False
@@ -21,4 +23,4 @@ class Boss(pygame.sprite.Sprite):
         self.facingUp = False
         self.facingDown = False
         self.speed = 10
-        self.health = 100
+        self.health = 500
