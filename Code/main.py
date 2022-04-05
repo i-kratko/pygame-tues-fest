@@ -123,9 +123,8 @@ class StateManager():
         spawn_platform=pygame.USEREVENT
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)
         #creating the player
-        player = Player(100, 408, const.playerSpritePath, 100)
-        dagger = Weapon(350,408, const.daggerSpritePath, 20)
-        dagger.pickUp(player)
+        player = Player(40, 408, const.playerSpritePath, 100)
+        dagger = Weapon(350,418, const.daggerSpritePath, 20)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
         #score
@@ -212,6 +211,10 @@ class StateManager():
                 player.isStanding = False
 
             player.update()
+            dagger.pickUp(player)
+            if player.rect.bottom > 450:
+                const.playerMovement += const.gravity
+            player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
 
             checkPlatformCollisionWithPLayer(platform_list)

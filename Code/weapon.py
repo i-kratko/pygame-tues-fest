@@ -11,8 +11,10 @@ class Weapon(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = int(x)
         self.y = int(y)
+        self.rect.x = self.x
+        self.rect.y = self.y
         self.damage = int(damage)
 
     def pickUp(self, player):
-        if self.rect.colliderect(player):
-            print("bruH")
+        if self.rect.colliderect(player.rect):
+            print("leko mi e bruh.")
