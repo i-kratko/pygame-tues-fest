@@ -8,6 +8,7 @@ from weapon import Weapon
 from player import Player
 from button import Button
 from trigger import Trigger
+from enemy import Enemy
 
 
 def get_font(size): # Returns Press-Start-2P in the desired size
@@ -119,11 +120,12 @@ class StateManager():
         platform_surface=pygame.transform.scale(platform_surface, (178, 52))
         platform_list=[]
         platform_height= [180, 280, 380]
-        boss = Boss(500, 408, const.bossSpritePath, 100)
         spawn_platform=pygame.USEREVENT
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)
         #creating the player
-        player = Player(40, 408, const.playerSpritePath, 100)
+        player = Player(40, 418, const.playerSpritePath, 100)
+        enemy = Enemy(500, 392, const.enemySpritePath, 100)
+        boss = Boss(0, 0, const.bossSpritePath, 500)
         dagger = Weapon(350,418, const.daggerSpritePath, 20)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
@@ -226,6 +228,7 @@ class StateManager():
             display.blit(player.image,(player.rect.x, player.rect.y))
             display.blit(dagger.image,(dagger.rect.x, dagger.rect.y))
             display.blit(boss.image, (boss.rect.x, boss.rect.y))
+            display.blit(enemy.image, (enemy.rect.x, enemy.rect.y))
             display_score()
             score += 0.04
             platform_list = move_platforms(platform_list) 

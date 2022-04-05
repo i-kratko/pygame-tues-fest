@@ -1,6 +1,7 @@
 import pygame
 from pygame import sprite
 from player import Player
+from enemy import Enemy
 import const
 
 class Weapon(pygame.sprite.Sprite):
@@ -18,3 +19,7 @@ class Weapon(pygame.sprite.Sprite):
     def pickUp(self, player):
         if self.rect.colliderect(player.rect):
             print("leko mi e bruh.")
+    
+    def dealDamage(self, enemy):
+        enemy.hitpoints -= self.damage
+        print(enemy.hitpoints)

@@ -2,16 +2,14 @@ import pygame
 from pygame import sprite
 import const
 
-class Boss(pygame.sprite.Sprite):
+class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, spritePath, health):
         super().__init__()
-        self.image = pygame.image.load(const.bossSpritePath)
-        self.image = pygame.transform.scale(self.image, (38, 40))
+        self.image = pygame.image.load(const.enemySpritePath)
+        self.image = pygame.transform.scale(self.image, (72, 72))
         self.rect = self.image.get_rect()
         self.x = int(x)
         self.y = int(y)
-        self.velX = 0
-        self.velY = 0
         self.rect.x = self.x
         self.rect.y = self.y
         self.rightPressed = False
