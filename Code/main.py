@@ -179,26 +179,22 @@ class StateManager():
                     if event.key == pygame.K_d:
                         player.rightPressed = True
                         bryh_sound.play()
-                    if event.key == pygame.K_w:
-                        player.upPressed = True
-                        bryh_sound.play()
-                    if event.key == pygame.K_s:
-                        player.downPressed = True
+                    if event.key == pygame.K_SPACE:
+                        player.jumpPressed = True
                         bryh_sound.play()
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
                             pygame.quit()
                             exit()
-                
-
                 #KEYUP EVENTS
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_a:
                         player.leftPressed = False
                     if event.key == pygame.K_d:
                         player.rightPressed = False
-                    if event.key == pygame.K_w:
-                        player.upPressed = False
+                    if event.key == pygame.K_SPACE:
+                        player.jumpPressed = True
+                        bryh_sound.play()
 
                 if player.rect.colliderect(testTrigger.rect):
                     testTrigger.action()
@@ -214,15 +210,17 @@ class StateManager():
                 const.playerMovement += const.gravity
             player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
+
             #blit triggers
             for trigger in triggerGroup:
                 display.blit(trigger.trigger, (trigger.x, trigger.y))
+
             display.blit(player.image,(player.rect.x, player.rect.y))
             display.blit(dagger.image,(dagger.rect.x, dagger.rect.y))
             display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
-            score+=0.04
-            platform_list=move_platforms(platform_list) 
+            score += 0.04
+            platform_list = move_platforms(platform_list) 
             draw_platforms(platform_list)
             display_blood()
             const.floor_x_position-=2

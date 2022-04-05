@@ -2,6 +2,8 @@ import pygame
 from pygame import sprite
 import const
 
+#rework class to remove vertical movement
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, spritePath, blood):
         super().__init__()
@@ -13,25 +15,14 @@ class Player(pygame.sprite.Sprite):
         self.velY = 0
         self.rightPressed = False
         self.leftPressed = False
-        self.upPressed = False
-        self.downPressed = False
+        self.jumpPressed = False
+
         self.facingRight = True
         self.facingLeft = False
-        self.facingUp = False
-        self.facingDown = False
+
         self.speed = 10
         self.blood = 100
-    def jump(self):
-        self.velX = 10
-        self.velY = 10
-        if const.isJumped is True:
-            self.y-=self.velY
-            self.velY-=1
-            if self.velY<-10:
-                jump=False
-                self.velY=10
-
-
+        
         
     def collisionWIthFloor(self, floor):
         if self.rect.colliderect(floor.get_rect()):
@@ -55,12 +46,6 @@ class Player(pygame.sprite.Sprite):
             self.facingRight = True
             self.faciingLeft = False
 
-        #checking for vertical input
-        if self.upPressed and not self.downPressed:
-            self.velY -= self.speed
-        if self.downPressed and not self.upPressed:
-            self.velY += self.speed
-
         #dont allow player to go out of the screen
         if self.rect.x + 32 > 799:
             self.x -= 10
@@ -69,12 +54,14 @@ class Player(pygame.sprite.Sprite):
             self.x += 10
             self.velX = 0
 
-        if self.rect.y + 32 > 599:
-            self.y -= 10
-            self.velY = 0
-        if  self.rect.y  < 1:
-            self.y += 10
-            self.velY = 0
+
+
+        #jumping
+        if self.jumpPressed is True:
+            self.y -= self.velY
+            self.velY -= 1
+            if self.velY < -10:
+                self.velY = 10
 
         self.x += self.velX
         self.y += self.velY
