@@ -1,5 +1,6 @@
 from pickle import TRUE
 import pygame
+import random
 from sys import exit
 import const
 from player import Player
@@ -117,7 +118,12 @@ class StateManager():
         background = pygame.image.load(const.gameBackgroundPath)
         bgScaled = pygame.transform.scale(background, (800, 600))
         floor_surface= pygame.image.load(const.floorPath)
-
+        platform_surface=pygame.image.load(const.platformPath)
+        platform_surface=pygame.transform.scale(platform_surface, (178, 52))
+        platform_list=[]
+        platform_height= [200, 300, 400, 500]
+        spawn_platform=pygame.USEREVENT
+        pygame.time.set_timer(spawn_platform, const.spawn_platform_time)
         #creating the player
         player = Player(10, 408, const.playerSpritePath, 100)
         playerGroup = pygame.sprite.Group()
@@ -136,7 +142,21 @@ class StateManager():
             display.blit(blood_surface, blood_rect)
         def draw_floor():
             display.blit(floor_surface, (const.floor_x_position, 450))
-            display.blit(floor_surface, (const.floor_x_position+800, 450))   
+            display.blit(floor_surface, (const.floor_x_position+800, 450)) 
+        def create_platform():
+            platform_x_position=random.choice(platform_height)
+            new_platform=platform_surface.get_rect(midbottom=(900, platform_x_position))
+            return new_platform
+        def move_platforms(platforms):
+            for platform in platforms:
+                platform.centerx-=2
+            return platforms
+        def draw_platforms(platforms):
+            for platform in platforms:
+                display.blit(platform_surface, platform)
+
+
+
         #sounds 
         bryh_sound=pygame.mixer.Sound(const.bryhsound)
 
@@ -169,6 +189,9 @@ class StateManager():
                         if event.key == pygame.K_ESCAPE:
                             pygame.quit()
                             exit()
+                if event.type==spawn_platform:
+                    platform_list.append(create_platform())
+
                 #KEYUP EVENTS
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_a:
@@ -198,8 +221,10 @@ class StateManager():
             display.blit(player.image,(player.rect.x, player.rect.y))
             display_score()
             score+=0.04
+            platform_list=move_platforms(platform_list) 
+            draw_platforms(platform_list)
             display_blood()
-            const.floor_x_position-=1
+            const.floor_x_position-=2
             draw_floor()
             if const.floor_x_position<=-800:
                 const.floor_x_position=0

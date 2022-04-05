@@ -7,6 +7,7 @@ playerMovement = 0
 gravity = 0.5
 isJumped = False
 floor_x_position=0
+spawn_platform_time=2500
 ##### COLORS #####
 black = [0, 0, 0]
 white = [255, 255, 255]
@@ -23,4 +24,5 @@ backgroundPath = "Graphics/backgrounds/ne.png"
 gameBackgroundPath = "Graphics/GameBackground.png"
 platformSpritePath = "Graphics/Platfrom.png"
 floorPath="Graphics/loop.png"
+platformPath="Graphics/platform.png"
 ##### BUTTON SPRITES ######
