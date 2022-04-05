@@ -4,6 +4,7 @@ import random
 from sys import exit
 from boss import Boss
 import const
+from weapon import Weapon
 from player import Player
 from button import Button
 from trigger import Trigger
@@ -44,8 +45,6 @@ class StateManager():
 
             display.blit(bgSurface,(0,0))
             display.blit(BACK_BUTTON.image, (280, 500))
-            #display.blit(OPTIONS_BUTTON.image, (125, 150))
-            #display.blit(QUIT_BUTTON.image, (230, 250))
 
             pygame.display.update()
             clock.tick(const.FPS)
@@ -99,8 +98,6 @@ class StateManager():
             display.blit(PLAY_BUTTON.image, (280, 150))
             display.blit(OPTIONS_BUTTON.image, (220,280))
             display.blit(QUIT_BUTTON.image, (280,410))
-            #display.blit(OPTIONS_BUTTON.image, (125, 150))
-            #display.blit(QUIT_BUTTON.image, (230, 250))
 
             pygame.display.update()
             clock.tick(const.FPS)
@@ -115,7 +112,6 @@ class StateManager():
         testTrigger = Trigger(730, 550, 20, 20)
         triggerGroup = []
         triggerGroup.append(testTrigger)
-
         background = pygame.image.load(const.gameBackgroundPath)
         bgScaled = pygame.transform.scale(background, (800, 600))
         floor_surface= pygame.image.load(const.floorPath)
@@ -123,11 +119,13 @@ class StateManager():
         platform_surface=pygame.transform.scale(platform_surface, (178, 52))
         platform_list=[]
         platform_height= [200, 300, 400, 500]
-        boss = Boss(300, 408, const.bossSpritePath, 100)
+        boss = Boss(500, 408, const.bossSpritePath, 100)
         spawn_platform=pygame.USEREVENT
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)
         #creating the player
-        player = Player(300, 408, const.playerSpritePath, 100)
+        player = Player(100, 408, const.playerSpritePath, 100)
+        dagger = Weapon(350,408, const.daggerSpritePath, 20)
+        dagger.pickUp(player)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
         #score
@@ -156,8 +154,6 @@ class StateManager():
         def draw_platforms(platforms):
             for platform in platforms:
                 display.blit(platform_surface, platform)
-
-
 
         #sounds 
         bryh_sound=pygame.mixer.Sound(const.bryhsound)
@@ -221,6 +217,7 @@ class StateManager():
             for trigger in triggerGroup:
                 display.blit(trigger.trigger, (trigger.x, trigger.y))
             display.blit(player.image,(player.rect.x, player.rect.y))
+            display.blit(dagger.image,(dagger.rect.x, dagger.rect.y))
             display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
             score+=0.04
