@@ -20,22 +20,21 @@ class Player(pygame.sprite.Sprite):
         self.facingRight = True
         self.facingLeft = False
 
+        self.isStanding = False
+
         self.speed = 10
         self.blood = 100
-        
-        
-    def collisionWIthFloor(self, floor):
-        if self.rect.colliderect(floor.get_rect()):
-            print("bruh")
-            const.gravity = 0
-        else:
-            const.gravity = 0.5
 
+    def isStandingOnPlatform(self):
+            if self.isStanding:
+                self.velY = 0
 
     #function to handle player movement
     def update(self):
         self.velX = 0
-        self.velY = 0
+        #always 2 because of gravity
+        self.velY = 5
+
         #checking for horizontal input
         if self.leftPressed and not self.rightPressed:
             self.velX -= self.speed
@@ -55,15 +54,15 @@ class Player(pygame.sprite.Sprite):
             self.velX = 0
 
 
-
         #jumping
         if self.jumpPressed is True:
-            self.y -= self.velY
-            self.velY -= 1
-            if self.velY < -10:
-                self.velY = 10
+            self.velY -= 30
+
+        self.isStandingOnPlatform()
 
         self.x += self.velX
         self.y += self.velY
 
         self.rect = pygame.Rect(int(self.x), int(self.y), 32, 32)        
+
+        

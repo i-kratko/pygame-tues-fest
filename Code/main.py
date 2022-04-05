@@ -154,6 +154,12 @@ class StateManager():
         def draw_platforms(platforms):
             for platform in platforms:
                 display.blit(platform_surface, platform)
+        def checkPlatformCollisionWithPLayer(platforms):
+            for platform in platforms:
+                if platform.colliderect(player.rect):
+                    player.isStanding = True
+                else:
+                    player.isStanding = False
 
         #sounds 
         bryh_sound=pygame.mixer.Sound(const.bryhsound)
@@ -193,23 +199,22 @@ class StateManager():
                     if event.key == pygame.K_d:
                         player.rightPressed = False
                     if event.key == pygame.K_SPACE:
-                        player.jumpPressed = True
+                        player.jumpPressed = False
                         bryh_sound.play()
 
                 if player.rect.colliderect(testTrigger.rect):
                     testTrigger.action()
                     
-            if const.isJumped:
-                jumpingTimer -= 1
-                if jumpingTimer == 0:
-                    const.isJumped = False
-                    jumpingTimer = 120
+
+            if player.rect.colliderect(floor_surface.get_rect()):
+                player.isStanding = True
+            else:
+                player.isStanding = False
 
             player.update()
-            if player.rect.bottom>450:
-                const.playerMovement += const.gravity
-            player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
+
+            checkPlatformCollisionWithPLayer(platform_list)
 
             #blit triggers
             for trigger in triggerGroup:
