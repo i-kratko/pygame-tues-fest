@@ -7,7 +7,6 @@ class Boss(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load(const.bossSpritePath)
         self.image = pygame.transform.scale(self.image, (38, 40))
-        self.image.set_colorkey((255, 255, 255))
         self.rect = self.image.get_rect()
         self.x = int(x)
         self.y = int(y)

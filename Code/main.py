@@ -118,7 +118,7 @@ class StateManager():
         platform_surface=pygame.image.load(const.platformPath)
         platform_surface=pygame.transform.scale(platform_surface, (178, 52))
         platform_list=[]
-        platform_height= [200, 300, 400, 500]
+        platform_height= [180, 280, 380]
         boss = Boss(500, 408, const.bossSpritePath, 100)
         spawn_platform=pygame.USEREVENT
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)
@@ -166,6 +166,8 @@ class StateManager():
                     pygame.quit()
                     exit()
                 #KEYDOWN EVENTS
+                if event.type==spawn_platform:
+                    platform_list.append(create_platform())
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE and const.isJumped == False:
                         jumpingTimer -= 1
@@ -187,8 +189,7 @@ class StateManager():
                         if event.key == pygame.K_ESCAPE:
                             pygame.quit()
                             exit()
-                if event.type==spawn_platform:
-                    platform_list.append(create_platform())
+                
 
                 #KEYUP EVENTS
                 if event.type == pygame.KEYUP:

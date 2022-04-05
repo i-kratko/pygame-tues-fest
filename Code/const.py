@@ -7,7 +7,7 @@ playerMovement = 0
 gravity = 0.5
 isJumped = False
 floor_x_position=0
-spawn_platform_time=2000
+spawn_platform_time=3500
 ##### COLORS #####
 black = [0, 0, 0]
 white = [255, 255, 255]
