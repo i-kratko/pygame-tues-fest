@@ -6,7 +6,7 @@ FPS = 60
 playerMovement = 0
 gravity = 0.5
 isJumped = False
-spawn_platform_time=3500
+spawn_platform_time=2690
 ##### COLORS #####
 black = [0, 0, 0]
 white = [255, 255, 255]
