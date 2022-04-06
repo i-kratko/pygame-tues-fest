@@ -120,7 +120,7 @@ class StateManager():
         platform_list = pygame.sprite.Group()
         platform_height= [175, 275, 375 , 475]
         spawn_platform=pygame.USEREVENT 
-        pygame.time.set_timer(spawn_platform, const.spawn_platform_time)
+        pygame.time.set_timer(spawn_platform, const.spawn_platform_time)    
         spawn_enemy=pygame.USEREVENT+1
         ##PLAT COUNTER
         self.platformCounter = 0
@@ -145,16 +145,9 @@ class StateManager():
             blood_rect = blood_surface.get_rect(center=(110, 80))
             display.blit(blood_surface, blood_rect)
         def create_platform():
-            if self.platformCounter % 2 == 0:
-                platform_x_position=platform_height[0]
-                new_platform = Platform(900, platform_x_position, const.platformSpritePath)
-                self.platformCounter += 1
+                platform_y_position=platform_height[0]
+                new_platform = Platform(900, platform_y_position, const.platformSpritePath)
                 return new_platform
-            else:
-                platform_x_position=platform_height[0]
-                new_platform1 = Platform(900, platform_x_position, const.platformSpritePath)
-                self.platformCounter += 1
-                return new_platform1
         def move_platforms(platforms):
             for platform in platforms:
                 platform.update()
@@ -181,6 +174,7 @@ class StateManager():
             for platform in platforms:
                 if platform.rect.colliderect(player.rect):
                     player.isStanding = True
+                    break
                 else:
                     player.isStanding = False
                 #TODO
