@@ -10,7 +10,8 @@ class Player(pygame.sprite.Sprite):
         self.attackSprites = []
         self.isAnimating = False
         self.attackSprites.append(pygame.image.load("Graphics/Player/Run.png"))
-        self.attackSprites.append(pygame.image.load("Graphics/Player/animation.png"))
+        self.attackSprites.append(pygame.image.load("Graphics/Player/animation-2.png.png"))
+        self.attackSprites.append(pygame.image.load("Graphics/Player/animation-1.png.png"))
         self.currentSprite = 0
         self.image = self.attackSprites[self.currentSprite]
         self.rect = self.image.get_rect()
@@ -32,7 +33,7 @@ class Player(pygame.sprite.Sprite):
 
     def updateSprite(self):
         if self.isAnimating == True:
-            self.currentSprite += 0.1
+            self.currentSprite += 0.16
             if self.currentSprite >= len(self.attackSprites):
                 self.currentSprite = 0
                 self.isAnimating = False

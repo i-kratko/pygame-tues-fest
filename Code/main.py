@@ -239,7 +239,7 @@ class StateManager():
             checkPlatformCollisionWithPLayer(platform_list)
 
             display.blit(player.image,(player.rect.x, player.rect.y))
-            display.blit(boss.image, (boss.rect.x, boss.rect.y))
+            #display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
             score += 0.04
             #platform_list = move_platforms(platform_list) 
