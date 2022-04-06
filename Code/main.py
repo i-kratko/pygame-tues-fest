@@ -116,11 +116,10 @@ class StateManager():
         triggerGroup.append(testTrigger)
         background = pygame.image.load(const.gameBackgroundPath)
         bgScaled = pygame.transform.scale(background, (800, 600))
-        floor_surface= pygame.image.load(const.floorPath)
         platform_surface=pygame.image.load(const.platformPath)
         platform_surface=pygame.transform.scale(platform_surface, (178, 52))
         platform_list=[]
-        platform_height= [180, 280, 380]
+        platform_height= [175, 275, 375 , 475]
         spawn_platform=pygame.USEREVENT 
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)
         spawn_enemy=pygame.USEREVENT+1
@@ -144,9 +143,6 @@ class StateManager():
             blood_surface=blood_font.render(f'Health:{int(player.blood)}', True, const.red_blood)
             blood_rect = blood_surface.get_rect(center=(110, 80))
             display.blit(blood_surface, blood_rect)
-        def draw_floor():
-            display.blit(floor_surface, (const.floor_x_position, 450))
-            display.blit(floor_surface, (const.floor_x_position+800, 450)) 
         def create_platform():
             platform_x_position=random.choice(platform_height)
             new_platform=platform_surface.get_rect(midbottom=(900, platform_x_position))
@@ -225,12 +221,6 @@ class StateManager():
 
                 if player.rect.colliderect(testTrigger.rect):
                     testTrigger.action()
-                    
-
-            if player.rect.colliderect(floor_surface.get_rect()):
-                player.isStanding = True
-            else:
-                player.isStanding = False
 
             player.update()
             dagger.pickUp(player)
@@ -241,10 +231,6 @@ class StateManager():
 
             checkPlatformCollisionWithPLayer(platform_list)
 
-            #blit triggers
-            for trigger in triggerGroup:
-                display.blit(trigger.trigger, (trigger.x, trigger.y))
-
             display.blit(player.image,(player.rect.x, player.rect.y))
             display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
@@ -254,10 +240,6 @@ class StateManager():
             enemy_list=move_enemy(enemy_list)
             draw_enemy(enemy_list)
             display_blood()
-            const.floor_x_position-=2
-            draw_floor()
-            if const.floor_x_position<=-800:
-                const.floor_x_position=0
             
             pygame.display.update()
             #bruh
