@@ -122,10 +122,17 @@ class StateManager():
         spawn_platform=pygame.USEREVENT 
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)    
         spawn_enemy=pygame.USEREVENT+1
+        initialPlatform = Platform(0, 300, const.platformPath)
+        secondPlatform = Platform(200, 300, const.platformPath)
+        thirdPlatform = Platform(400, 300, const.platformPath)
+        initialPlatformsList = pygame.sprite.Group()
+        initialPlatformsList.add(initialPlatform)
+        initialPlatformsList.add(secondPlatform)
+        initialPlatformsList.add(thirdPlatform)
         ##PLAT COUNTER
         self.platformCounter = 0
         #creating the player
-        player = Player(40, 418, const.playerSpritePath, 100)
+        player = Player(450, 100, const.playerSpritePath, 100)
         enemy = Enemy(500, 392, const.enemySpritePath, 100)
         enemy_list=[]
         boss = Boss(0, 0, const.bossSpritePath, 500)
@@ -234,13 +241,18 @@ class StateManager():
             display.blit(bgScaled, (0, 0))
 
             checkPlatformCollisionWithPLayer(platform_list)
+            checkPlatformCollisionWithPLayer(initialPlatformsList)
 
             display.blit(player.image,(player.rect.x, player.rect.y))
             display.blit(boss.image, (boss.rect.x, boss.rect.y))
+            display.blit(initialPlatform.image, (initialPlatform.x, initialPlatform.y))
+            display.blit(secondPlatform.image, (secondPlatform.x, secondPlatform.y))
+            display.blit(thirdPlatform.image, (thirdPlatform.x, thirdPlatform.y))
             display_score()
             score += 0.04
             #platform_list = move_platforms(platform_list) 
             platform_list.update()
+            #initialPlatformsList.update()
             draw_platforms(platform_list)
             enemy_list=move_enemy(enemy_list)
             draw_enemy(enemy_list)
