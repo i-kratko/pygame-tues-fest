@@ -10,6 +10,7 @@ from button import Button
 from trigger import Trigger
 from enemy import Enemy
 from random import randint
+from platform import Platform
 
 
 def get_font(size): # Returns Press-Start-2P in the desired size
@@ -118,7 +119,7 @@ class StateManager():
         bgScaled = pygame.transform.scale(background, (800, 600))
         platform_surface=pygame.image.load(const.platformPath)
         platform_surface=pygame.transform.scale(platform_surface, (178, 52))
-        platform_list=[]
+        platform_list = pygame.sprite.Group()
         platform_height= [175, 275, 375 , 475]
         spawn_platform=pygame.USEREVENT 
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)
@@ -145,17 +146,17 @@ class StateManager():
             display.blit(blood_surface, blood_rect)
         def create_platform():
             platform_x_position=random.choice(platform_height)
-            new_platform=platform_surface.get_rect(midbottom=(900, platform_x_position))
+            new_platform= Platform(900, platform_x_position, const.platformSpritePath)
             return new_platform
         def move_platforms(platforms):
             for platform in platforms:
-                platform.centerx-=2
+                platform.update()
             return platforms
         def draw_platforms(platforms):
             for platform in platforms:
-                enemy.drawEnemy(platform.centerx-36, platform.top-42, display)
-                dagger.drawWeapon(platform.centerx+30, platform.top-16, display)
-                display.blit(platform_surface, platform)
+                enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
+                dagger.drawWeapon(platform.rect.centerx+30, platform.rect.top-16, display)
+                display.blit(platform.image, (platform.x, platform.y))
         def create_enemy(): 
             enemy_x_position=random.choice(platform_height)
             new_enemy = Enemy(500, enemy_x_position+30, const.enemySpritePath, 100)
@@ -171,10 +172,13 @@ class StateManager():
 
         def checkPlatformCollisionWithPLayer(platforms):
             for platform in platforms:
-                if platform.colliderect(player.rect):
+                if platform.rect.colliderect(player.rect):
                     player.isStanding = True
                 else:
                     player.isStanding = False
+                #TODO
+                #if platform.x < -200:
+                    
 
         #sounds 
         bryh_sound=pygame.mixer.Sound(const.bryhsound)
@@ -188,9 +192,8 @@ class StateManager():
                     exit()
                 #KEYDOWN EVENTS
                 if event.type==spawn_platform:
-                    platform_list.append(create_platform())
-                if event.type==spawn_enemy:
-                    enemy_list.append(create_enemy())
+                    platform_list.add(create_platform())
+                    print("BREH")
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE and const.isJumped == False:
                         jumpingTimer -= 1
@@ -235,7 +238,8 @@ class StateManager():
             display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
             score += 0.04
-            platform_list = move_platforms(platform_list) 
+            #platform_list = move_platforms(platform_list) 
+            platform_list.update()
             draw_platforms(platform_list)
             enemy_list=move_enemy(enemy_list)
             draw_enemy(enemy_list)

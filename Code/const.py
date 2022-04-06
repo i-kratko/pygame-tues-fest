@@ -24,6 +24,6 @@ quitButtonPath = "Graphics/quitbutton.png"
 backButtonPath = "Graphics/backbutton.png"
 backgroundPath = "Graphics/backgrounds/ne.png"
 gameBackgroundPath = "Graphics/GameBackground.png"
-platformSpritePath = "Graphics/Platfrom.png"
-platformPath="Graphics/platform.png"
+platformSpritePath = "Graphics/Platform.png"
+platformPath="Graphics/Platform.png"
 ##### BUTTON SPRITES ######
