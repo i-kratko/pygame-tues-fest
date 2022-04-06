@@ -16,14 +16,11 @@ class Player(pygame.sprite.Sprite):
         self.rightPressed = False
         self.leftPressed = False
         self.jumpPressed = False
-
         self.facingRight = True
         self.facingLeft = False
-
         self.isStanding = False
-
         self.speed = 10
-        self.blood = 100
+        self.blood = blood
 
     def isStandingOnPlatform(self):
             if self.isStanding:

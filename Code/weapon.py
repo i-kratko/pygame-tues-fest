@@ -3,6 +3,7 @@ from pygame import sprite
 from player import Player
 from enemy import Enemy
 import const
+import random
 
 class Weapon(pygame.sprite.Sprite):
     def __init__(self, x, y, spritePath, damage):
@@ -23,3 +24,7 @@ class Weapon(pygame.sprite.Sprite):
     def dealDamage(self, enemy):
         enemy.hitpoints -= self.damage
         print(enemy.hitpoints)
+    
+    def drawWeapon(self, x, y, display):
+        if random.randint(0,100) < 33:
+            display.blit(self.image, (x,y))

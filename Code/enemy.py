@@ -1,6 +1,7 @@
 import pygame
 from pygame import sprite
 import const
+import random
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, spritePath, health):
@@ -24,4 +25,5 @@ class Enemy(pygame.sprite.Sprite):
         self.health = health
 
     def drawEnemy(self, x, y, display):
-        display.blit(self.image, (x,y))
+        if random.randint(0,100) < 33:
+            display.blit(self.image, (x,y))
