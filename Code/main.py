@@ -9,6 +9,7 @@ from player import Player
 from button import Button
 from trigger import Trigger
 from enemy import Enemy
+from random import randint
 
 
 def get_font(size): # Returns Press-Start-2P in the desired size
@@ -120,11 +121,13 @@ class StateManager():
         platform_surface=pygame.transform.scale(platform_surface, (178, 52))
         platform_list=[]
         platform_height= [180, 280, 380]
-        spawn_platform=pygame.USEREVENT
+        spawn_platform=pygame.USEREVENT 
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)
+        spawn_enemy=pygame.USEREVENT+1
         #creating the player
         player = Player(40, 418, const.playerSpritePath, 100)
         enemy = Enemy(500, 392, const.enemySpritePath, 100)
+        enemy_list=[]
         boss = Boss(0, 0, const.bossSpritePath, 500)
         dagger = Weapon(350,418, const.daggerSpritePath, 20)
         playerGroup = pygame.sprite.Group()
@@ -155,6 +158,22 @@ class StateManager():
         def draw_platforms(platforms):
             for platform in platforms:
                 display.blit(platform_surface, platform)
+        def create_enemy(): 
+            enemy_x_position=random.choice(platform_height)
+            new_enemy = Enemy(500, enemy_x_position+30, const.enemySpritePath, 100)
+            new_enemy=new_enemy.rect(midbottom=(300, enemy_x_position+30))
+            return new_enemy
+        def move_enemy(enemies):
+            for enemy in enemies:
+                Enemy.centerx-=2
+            return enemies
+        def draw_enemy(enemies):
+            for enemy in enemies:
+                display.blit(Enemy.image, enemy)
+
+        
+
+        
         def checkPlatformCollisionWithPLayer(platforms):
             for platform in platforms:
                 if platform.colliderect(player.rect):
@@ -175,6 +194,8 @@ class StateManager():
                 #KEYDOWN EVENTS
                 if event.type==spawn_platform:
                     platform_list.append(create_platform())
+                if event.type==spawn_enemy:
+                    enemy_list.append(create_enemy())
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE and const.isJumped == False:
                         jumpingTimer -= 1
@@ -233,6 +254,8 @@ class StateManager():
             score += 0.04
             platform_list = move_platforms(platform_list) 
             draw_platforms(platform_list)
+            enemy_list=move_enemy(enemy_list)
+            draw_enemy(enemy_list)
             display_blood()
             const.floor_x_position-=2
             draw_floor()
