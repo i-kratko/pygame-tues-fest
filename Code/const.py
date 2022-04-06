@@ -14,7 +14,7 @@ red_blood=[102, 0, 0]
 ##### AUDIO PATHS #####
 bryhsound = "Audio/bryh.wav" 
 ##### SPRITE PATHS #####
-playerSpritePath = "Graphics\PlayerSprite.png"
+playerSpritePath = "Graphics\Player\Run.png"
 daggerSpritePath = "Graphics\Weapons\sword.png.png"
 bossSpritePath = "Graphics/Bosses/boss_4.png"
 enemySpritePath = "Graphics/Enemies/enemy2.png"
