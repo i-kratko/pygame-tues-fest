@@ -157,6 +157,8 @@ class StateManager():
             return platforms
         def draw_platforms(platforms):
             for platform in platforms:
+                if random.randint(0,100) < 33:
+                    enemy.drawEnemy(platform.centerx-36, platform.top-42, display)
                 display.blit(platform_surface, platform)
         def create_enemy(): 
             enemy_x_position=random.choice(platform_height)
@@ -249,7 +251,6 @@ class StateManager():
             display.blit(player.image,(player.rect.x, player.rect.y))
             display.blit(dagger.image,(dagger.rect.x, dagger.rect.y))
             display.blit(boss.image, (boss.rect.x, boss.rect.y))
-            display.blit(enemy.image, (enemy.rect.x, enemy.rect.y))
             display_score()
             score += 0.04
             platform_list = move_platforms(platform_list) 

@@ -22,3 +22,6 @@ class Enemy(pygame.sprite.Sprite):
         self.facingDown = False
         self.speed = 10
         self.health = health
+
+    def drawEnemy(self, x, y, display):
+        display.blit(self.image, (x,y))
