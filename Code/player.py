@@ -52,7 +52,7 @@ class Player(pygame.sprite.Sprite):
 
 
         #jumping
-        if self.jumpPressed is True and self.isStanding:
+        if self.jumpPressed is True:
             self.velY -= 30
 
         self.isStandingOnPlatform()
