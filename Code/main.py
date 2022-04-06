@@ -12,10 +12,8 @@ from enemy import Enemy
 from random import randint
 from platform import Platform
 
-
 def get_font(size): # Returns Press-Start-2P in the desired size
         return pygame.font.Font("Graphics/font.ttf", size)
-
 
 #bruh
 class StateManager():
