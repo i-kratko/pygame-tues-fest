@@ -28,7 +28,7 @@ class StateManager():
         gameOver = False
 
         bgSurface = pygame.Surface((800,600))
-        bgSurface.fill('Green')
+        bgSurface.fill('Blue')
 
         BACK_BUTTON = Button(280, 500, const.backButtonPath)
 
@@ -223,13 +223,12 @@ class StateManager():
                 #if platform.x < -200:
                     
 
-        #sounds 
-
 
         #TODO: change the background
 
         while not gameOver:
             if player.rect.y > 569:
+                deathSound.play()
                 self.level = 4
                 self.finalScore = score
                 self.stateManager()
@@ -280,6 +279,7 @@ class StateManager():
             enemy.updateSprite()
             dagger.pickUp(player)
             if player.blood <= 0:
+                deathSound.play()
                 self.level = 4
                 self.finalScore = score
                 self.stateManager()
@@ -318,6 +318,7 @@ class StateManager():
 #innit
 pygame.mixer.pre_init(frequency=44100, size=16, channels=1, buffer=256)
 pygame.init()
+deathSound = pygame.mixer.Sound("Audio/Death.wav")
 display = pygame.display.set_mode((const.disW, const.disH), pygame.FULLSCREEN)
 pygame.display.set_caption(const.gameName)
 clock = pygame.time.Clock()
@@ -330,3 +331,4 @@ def gameLoop():
         stateManager.stateManager()
 
 gameLoop()
+
