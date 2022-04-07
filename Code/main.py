@@ -45,7 +45,6 @@ class StateManager():
                     if BACK_BUTTON.rect.collidepoint(pygame.mouse.get_pos()):
                         self.level = 1
                         self.stateManager()
-                    
 
             display.blit(bgSurface,(0,0))
             display.blit(BACK_BUTTON.image, (280, 500))
@@ -55,7 +54,7 @@ class StateManager():
     #TODO: main menu
     def mainMenu(self):
         gameOver = False
-
+        mainMenuSound.play()
         bgSurface = pygame.Surface((800,600))
         bgSurface.fill('Blue')
 
@@ -73,16 +72,14 @@ class StateManager():
         while not gameOver:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    mainMenuSound.stop()
                     pygame.quit()
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
-                    #if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                            #print("BRUH")
-                            #self.level = 2
-                            #self.stateManager()
                     if PLAY_BUTTON.rect.collidepoint(pos):
                         self.level = 2
+                        mainMenuSound.stop()
                         self.stateManager()
                     if OPTIONS_BUTTON.rect.collidepoint(pos):
                         self.level = 3
@@ -94,7 +91,6 @@ class StateManager():
                     if event.key == pygame.K_ESCAPE:
                         pygame.quit()
                         exit()
-
 
             display.blit(bgSurface,(0,0))
             display.blit(MENU_TEXT, (85, 33))
@@ -319,6 +315,8 @@ class StateManager():
 pygame.mixer.pre_init(frequency=44100, size=16, channels=1, buffer=256)
 pygame.init()
 deathSound = pygame.mixer.Sound("Audio/Death.wav")
+mainMenuSound = pygame.mixer.Sound("Audio/MainMenu.wav")
+mainMenuSound.set_volume(-5.0)
 display = pygame.display.set_mode((const.disW, const.disH), pygame.FULLSCREEN)
 pygame.display.set_caption(const.gameName)
 clock = pygame.time.Clock()
