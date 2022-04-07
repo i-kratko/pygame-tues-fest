@@ -187,7 +187,7 @@ class StateManager():
             display.blit(blood_surface, blood_rect)
         def create_platform():
                 platform_y_position=random.choice(platform_height)
-                new_platform = Platform(800, platform_y_position, const.platformSpritePath)
+                new_platform = Platform(900, platform_y_position, const.platformSpritePath)
                 return new_platform
         def move_platforms(platforms):
             for platform in platforms:
