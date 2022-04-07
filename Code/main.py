@@ -42,8 +42,9 @@ class StateManager():
                         pygame.quit()
                         exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if BACK_BUTTON.rect.collidepoint(pygame.mouse.get_pos()):
+                    if BACK_BUTTON.rect.collidepoint(pygame.mouse.get_pos()):                       
                         self.level = 1
+                        mainMenuSound.play()
                         self.stateManager()
 
             display.blit(bgSurface,(0,0))
@@ -80,6 +81,7 @@ class StateManager():
                     if PLAY_BUTTON.rect.collidepoint(pos):
                         self.level = 2
                         mainMenuSound.stop()
+                        ingameSound.play()
                         self.stateManager()
                     if OPTIONS_BUTTON.rect.collidepoint(pos):
                         self.level = 3
@@ -115,6 +117,7 @@ class StateManager():
         while not gameOver:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    ingameSound.stop()
                     pygame.quit()
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -224,6 +227,7 @@ class StateManager():
 
         while not gameOver:
             if player.rect.y > 569:
+                ingameSound.stop()
                 deathSound.play()
                 self.level = 4
                 self.finalScore = score
@@ -275,6 +279,7 @@ class StateManager():
             enemy.updateSprite()
             dagger.pickUp(player)
             if player.blood <= 0:
+                ingameSound.stop()
                 deathSound.play()
                 self.level = 4
                 self.finalScore = score
@@ -310,13 +315,16 @@ class StateManager():
         if self.level == 4:
             self.game_Over()
             
+            
 
 #innit
-pygame.mixer.pre_init(frequency=44100, size=16, channels=1, buffer=256)
+pygame.mixer.pre_init(frequency = 20000, size = 16, channels = 1, buffer = 256)
 pygame.init()
 deathSound = pygame.mixer.Sound("Audio/Death.wav")
 mainMenuSound = pygame.mixer.Sound("Audio/MainMenu.wav")
-mainMenuSound.set_volume(-5.0)
+ingameSound = pygame.mixer.Sound("Audio/ingame.wav")
+mainMenuSound.set_volume(0.06)
+ingameSound.set_volume(0.035)
 display = pygame.display.set_mode((const.disW, const.disH), pygame.FULLSCREEN)
 pygame.display.set_caption(const.gameName)
 clock = pygame.time.Clock()
