@@ -26,5 +26,4 @@ class Weapon(pygame.sprite.Sprite):
         print(enemy.hitpoints)
     
     def drawWeapon(self, x, y, display):
-        if random.randint(0,100) < 33:
-            display.blit(self.image, (x,y))
+        display.blit(self.image, (x,y))

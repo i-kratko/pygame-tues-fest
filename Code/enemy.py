@@ -25,5 +25,12 @@ class Enemy(pygame.sprite.Sprite):
         self.health = health
 
     def drawEnemy(self, x, y, display):
-        if random.randint(0,100) < 33:
-            display.blit(self.image, (x,y))
+        display.blit(self.image, (x,y))
+
+    def takeDamage(self, player):
+        self.health -= player.damage
+        if self.health <= 0:
+            self.stun()
+    
+    def stun(self):
+        print("Enemy stunned.")

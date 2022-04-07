@@ -125,7 +125,7 @@ class StateManager():
         ##PLAT COUNTER
         self.platformCounter = 0
         #creating the player
-        player = Player(40, 418, const.playerSpritePath, 100)
+        player = Player(40, 418, const.playerSpritePath, 100, 20)
         enemy = Enemy(500, 392, const.enemySpritePath, 100)
         enemy_list=[]
         boss = Boss(0, 0, const.bossSpritePath, 500)
@@ -157,18 +157,6 @@ class StateManager():
                 enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
                 dagger.drawWeapon(platform.rect.centerx+30, platform.rect.top-16, display)
                 display.blit(platform.image, (platform.x, platform.y))
-        def create_enemy(): 
-            enemy_x_position=random.choice(platform_height)
-            new_enemy = Enemy(500, enemy_x_position+30, const.enemySpritePath, 100)
-            new_enemy=new_enemy.rect(midbottom=(300, enemy_x_position+30))
-            return new_enemy
-        def move_enemy(enemies):
-            for enemy in enemies:
-                Enemy.centerx-=2
-            return enemies
-        def draw_enemy(enemies):
-            for enemy in enemies:
-                display.blit(Enemy.image, enemy)
 
         def checkPlatformCollisionWithPLayer(platforms):
             for platform in platforms:
@@ -193,6 +181,9 @@ class StateManager():
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     player.animateSelf()
+                    if player.rect.colliderect(enemy.rect):
+                        print("bruhhhhhhhhh")
+                        enemy.takeDamage(player)
                 #KEYDOWN EVENTS
                 if event.type==spawn_platform:
                     platform_list.add(create_platform())
@@ -245,8 +236,6 @@ class StateManager():
             #platform_list = move_platforms(platform_list) 
             platform_list.update()
             draw_platforms(platform_list)
-            enemy_list=move_enemy(enemy_list)
-            draw_enemy(enemy_list)
             display_blood()
             
             pygame.display.update()
