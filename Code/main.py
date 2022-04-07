@@ -13,7 +13,8 @@ from random import randint
 from platform import Platform
 
 def get_font(size): # Returns Press-Start-2P in the desired size
-        return pygame.font.Font("Graphics/font.ttf", size)
+    return pygame.font.Font("Graphics/font.ttf", size)
+
 
 #bruh
 class StateManager():
@@ -26,7 +27,6 @@ class StateManager():
 
         bgSurface = pygame.Surface((800,600))
         bgSurface.fill('Green')
-
 
         BACK_BUTTON = Button(280, 500, const.backButtonPath)
 
@@ -103,6 +103,45 @@ class StateManager():
             pygame.display.update()
             clock.tick(const.FPS)
 
+
+    def game_Over(self):
+        gameOver = False
+        bgSurface = pygame.Surface((800,600))
+        bgSurface.fill('Black')
+        scoreText = get_font(45).render("SCORE: ", True, "#ffffff")
+        gameOver_TEXT = get_font(72).render("GAME OVER", True, "#ffffff")  
+        QUIT_BUTTON = Button(280, 410, const.quitGameOverButtonPath)
+        pressButton1 = get_font(20).render("press any key to", True, "#ffffff")  
+        pressButton2 = get_font(20).render("return to the Main Menu", True, "#ffffff")  
+
+        while not gameOver:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    if QUIT_BUTTON.rect.collidepoint(pos):
+                        pygame.quit()
+                        exit()
+                if event.type == pygame.KEYDOWN:
+                    self.level = 1
+                    self.stateManager()
+
+
+            display.blit(bgSurface,(0,0))
+            display.blit(scoreText, (170,110))
+            display.blit(gameOver_TEXT, (75,220))
+            display.blit(pressButton1, (215,335))
+            display.blit(pressButton2, (155,370))
+            display.blit(QUIT_BUTTON.image, (280,450))
+
+            pygame.display.update()
+            clock.tick(const.FPS)
+
+
+
+
     #game loop
     def game(self):
         gameOver = False
@@ -125,20 +164,20 @@ class StateManager():
         ##PLAT COUNTER
         self.platformCounter = 0
         #creating the player
-        player = Player(40, 418, const.playerSpritePath, 100)
+        player = Player(40, 100, const.playerSpritePath, 100)
         enemy = Enemy(500, 392, const.enemySpritePath, 100)
         enemy_list=[]
         boss = Boss(0, 0, const.bossSpritePath, 500)
         dagger = Weapon(350,418, const.daggerSpritePath, 20)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
+        blood_font = get_font(20)
         #score
         score = 0
         score_font = get_font(20)
-        blood_font = get_font(20)
         def display_score():
-            score_surface=score_font.render(f'Score:{int(score)}', True, const.white)
-            score_rect=score_surface.get_rect(center=(700, 80))
+            score_surface = score_font.render(f'Score:{int(score)}', True, const.white)
+            score_rect = score_surface.get_rect(center=(700, 80))
             display.blit(score_surface, score_rect)
         def display_blood():
             blood_surface=blood_font.render(f'Health:{int(player.blood)}', True, const.red_blood)
@@ -187,6 +226,9 @@ class StateManager():
         #TODO: change the background
 
         while not gameOver:
+            if player.rect.y > 800:
+                self.level = 4
+                self.stateManager()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -223,7 +265,7 @@ class StateManager():
                         player.rightPressed = False
                     if event.key == pygame.K_SPACE:
                         player.jumpPressed = False
-                        bryh_sound.play()
+                        #bryh_sound.play()
 
                 if player.rect.colliderect(testTrigger.rect):
                     testTrigger.action()
@@ -260,6 +302,9 @@ class StateManager():
             self.game()
         if self.level == 3:
             self.options()
+        if self.level == 4:
+            self.game_Over()
+            
 
 #innit
 pygame.mixer.pre_init(frequency=44100, size=16, channels=1, buffer=256)
