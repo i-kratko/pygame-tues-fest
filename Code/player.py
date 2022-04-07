@@ -10,8 +10,8 @@ class Player(pygame.sprite.Sprite):
         self.attackSprites = []
         self.isAnimating = False
         self.attackSprites.append(pygame.image.load("Graphics/Player/idle.png"))
-        self.attackSprites.append(pygame.image.load("Graphics/Player/swing 2.png"))
-        self.attackSprites.append(pygame.image.load("Graphics/Player/swing 1.png"))
+        self.attackSprites.append(pygame.image.load("Graphics/Player/swing1.png"))
+        self.attackSprites.append(pygame.image.load("Graphics/Player/swing2.png"))
         self.currentSprite = 0
         self.image = self.attackSprites[self.currentSprite]
         self.rect = self.image.get_rect()
