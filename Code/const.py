@@ -28,4 +28,5 @@ backgroundPath = "Graphics/backgrounds/ne.png"
 gameBackgroundPath = "Graphics/backgrounds/GameBackground.png"
 platformSpritePath = "Graphics/Platform.png"
 platformPath="Graphics/Platform.png"
+floorPath="Graphics/loop.png"
 ##### BUTTON SPRITES ######

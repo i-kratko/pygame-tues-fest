@@ -164,6 +164,9 @@ class StateManager():
         spawn_enemy=pygame.USEREVENT+1
         ##PLAT COUNTER
         self.platformCounter = 0
+        #first platfrom
+        firstPlatform = Platform(20, 200, const.platformPath, True)
+        platform_list.add(firstPlatform)
         #creating the player
         player = Player(40, 100, const.playerSpritePath, 100, 20)
         enemy = Enemy(500, 392, const.enemySpritePath, 100)
@@ -185,19 +188,21 @@ class StateManager():
             blood_rect = blood_surface.get_rect(center=(110, 80))
             display.blit(blood_surface, blood_rect)
         def create_platform():
-                platform_y_position=random.choice(platform_height)
-                new_platform = Platform(900, platform_y_position, const.platformSpritePath)
-                new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 100)
-                enemy_list.add(new_enemy)
-                return new_platform
+            platform_y_position=random.choice(platform_height)
+            new_platform = Platform(900, platform_y_position, const.platformSpritePath, False)
+            new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 100)
+            enemy_list.add(new_enemy)
+            return new_platform
         def move_platforms(platforms):
             for platform in platforms:
-                platform.update()
+                if platform != firstPlatform:
+                    platform.update()
             return platforms
         def draw_platforms(platforms):
             for platform in platforms:
-                enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
-                enemy.rect.topleft = (platform.rect.centerx-36, platform.rect.top-42)
+                if not platform.isFirst:
+                    enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
+                    enemy.rect.topleft = (platform.rect.centerx-36, platform.rect.top-42)
                 
                 #dagger.drawWeapon(platform.rect.centerx+30, platform.rect.top-16, display)
                 display.blit(platform.image, (platform.x, platform.y))
