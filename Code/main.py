@@ -42,9 +42,9 @@ class StateManager():
                         pygame.quit()
                         exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if BACK_BUTTON.rect.collidepoint(pygame.mouse.get_pos()):                       
+                    if BACK_BUTTON.rect.collidepoint(pygame.mouse.get_pos()):          
                         self.level = 1
-                        mainMenuSound.play()
+                        mainMenuSound.stop()
                         self.stateManager()
 
             display.blit(bgSurface,(0,0))
@@ -260,6 +260,7 @@ class StateManager():
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
                             self.level = 1
+                            ingameSound.stop()
                             self.stateManager()
                 #KEYUP EVENTS
                 if event.type == pygame.KEYUP:
@@ -323,6 +324,7 @@ pygame.init()
 deathSound = pygame.mixer.Sound("Audio/Death.wav")
 mainMenuSound = pygame.mixer.Sound("Audio/MainMenu.wav")
 ingameSound = pygame.mixer.Sound("Audio/ingame.wav")
+deathSound.set_volume(0.5)
 mainMenuSound.set_volume(0.06)
 ingameSound.set_volume(0.035)
 display = pygame.display.set_mode((const.disW, const.disH), pygame.FULLSCREEN)
