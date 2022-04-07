@@ -194,7 +194,8 @@ class StateManager():
         def draw_platforms(platforms):
             for platform in platforms:
                 enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
-                dagger.drawWeapon(platform.rect.centerx+30, platform.rect.top-16, display)
+                enemy.rect.topleft = (platform.rect.centerx-36, platform.rect.top-42)
+                #dagger.drawWeapon(platform.rect.centerx+30, platform.rect.top-16, display)
                 display.blit(platform.image, (platform.x, platform.y))
         def create_enemy(): 
             enemy_x_position=random.choice(platform_height)
@@ -238,7 +239,7 @@ class StateManager():
                     if player.rect.colliderect(enemy.rect):
                         print("bruhhhhhhhhh")
                         enemy.takeDamage(player)
-                        score += 1000
+                        score += 10
                 #KEYDOWN EVENTS
                 if event.type==spawn_platform:
                     platform_list.add(create_platform())
@@ -277,8 +278,9 @@ class StateManager():
             player.update()
             player.updateSprite()
             dagger.pickUp(player)
-            if player.rect.bottom > 450:
-                const.playerMovement += const.gravity
+            if player.blood <= 0:
+                self.level = 4
+                self.stateManager()
             player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
 
@@ -287,6 +289,7 @@ class StateManager():
             display.blit(player.image,(player.rect.x, player.rect.y))
             #display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
+            player.blood -= 0.07
             score += 0.04
             #platform_list = move_platforms(platform_list) 
             platform_list.update()
