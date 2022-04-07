@@ -4,6 +4,7 @@ import random
 from sys import exit
 from boss import Boss
 import const
+from Score import display_score
 from weapon import Weapon
 from player import Player
 from button import Button
@@ -172,13 +173,7 @@ class StateManager():
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
         blood_font = get_font(20)
-        #score
-        score = 0
-        score_font = get_font(20)
-        def display_score():
-            score_surface = score_font.render(f'Score:{int(score)}', True, const.white)
-            score_rect = score_surface.get_rect(center=(700, 80))
-            display.blit(score_surface, score_rect)
+        
         def display_blood():
             blood_surface=blood_font.render(f'Health:{int(player.blood)}', True, const.red_blood)
             blood_rect = blood_surface.get_rect(center=(110, 80))
@@ -288,7 +283,7 @@ class StateManager():
 
             display.blit(player.image,(player.rect.x, player.rect.y))
             #display.blit(boss.image, (boss.rect.x, boss.rect.y))
-            display_score()
+            display_score(display)
             player.blood -= 0.07
             score += 0.04
             #platform_list = move_platforms(platform_list) 
