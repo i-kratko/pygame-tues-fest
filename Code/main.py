@@ -167,7 +167,7 @@ class StateManager():
         #creating the player
         player = Player(40, 100, const.playerSpritePath, 100, 20)
         enemy = Enemy(500, 392, const.enemySpritePath, 100)
-        enemy_list=[]
+        enemy_list = pygame.sprite.Group()
         boss = Boss(0, 0, const.bossSpritePath, 500)
         dagger = Weapon(350,418, const.daggerSpritePath, 20)
         playerGroup = pygame.sprite.Group()
@@ -187,6 +187,8 @@ class StateManager():
         def create_platform():
                 platform_y_position=random.choice(platform_height)
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath)
+                new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 100)
+                enemy_list.add(new_enemy)
                 return new_platform
         def move_platforms(platforms):
             for platform in platforms:
@@ -196,6 +198,7 @@ class StateManager():
             for platform in platforms:
                 enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
                 enemy.rect.topleft = (platform.rect.centerx-36, platform.rect.top-42)
+                
                 #dagger.drawWeapon(platform.rect.centerx+30, platform.rect.top-16, display)
                 display.blit(platform.image, (platform.x, platform.y))
         def create_enemy(): 
@@ -205,11 +208,11 @@ class StateManager():
             return new_enemy
         def move_enemy(enemies):
             for enemy in enemies:
-                Enemy.centerx-=2
+                enemy.rect.x-=2
             return enemies
         def draw_enemy(enemies):
             for enemy in enemies:
-                display.blit(Enemy.image, enemy)
+                display.blit(enemy.image, enemy)
 
         def checkPlatformCollisionWithPLayer(platforms):
             for platform in platforms:
@@ -299,7 +302,7 @@ class StateManager():
             platform_list.update()
             draw_platforms(platform_list)
             enemy_list=move_enemy(enemy_list)
-            draw_enemy(enemy_list)
+            #draw_enemy(enemy_list)
             display_blood()
             
             pygame.display.update()

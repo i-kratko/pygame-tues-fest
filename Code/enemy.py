@@ -49,7 +49,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def takeDamage(self, player):
         self.health -= player.damage
-        if player.blood<=97:
+        if player.blood < 100:
             player.blood += 3
         if self.health <= 0:
             self.stun()
