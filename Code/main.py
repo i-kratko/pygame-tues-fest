@@ -235,6 +235,10 @@ class StateManager():
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     player.animateSelf()
+                    if player.rect.colliderect(enemy.rect):
+                        print("bruhhhhhhhhh")
+                        enemy.takeDamage(player)
+                        score += 1000
                 #KEYDOWN EVENTS
                 if event.type==spawn_platform:
                     platform_list.add(create_platform())
