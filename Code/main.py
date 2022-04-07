@@ -15,12 +15,14 @@ from platform import Platform
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("Graphics/font.ttf", size)
 
+score = 0
 
 #bruh
 class StateManager():
 
     def __init__(self):
         self.level = 1
+        self.finalScore = 1
 
     def options(self):
         gameOver = False
@@ -108,7 +110,7 @@ class StateManager():
         gameOver = False
         bgSurface = pygame.Surface((800,600))
         bgSurface.fill('Black')
-        scoreText = get_font(45).render("SCORE: ", True, "#ffffff")
+        scoreText = get_font(45).render(f'SCORE: {int(self.finalScore)}', True, "#ffffff")
         gameOver_TEXT = get_font(72).render("GAME OVER", True, "#ffffff")  
         QUIT_BUTTON = Button(280, 410, const.quitGameOverButtonPath)
         pressButton1 = get_font(20).render("press any key to", True, "#ffffff")  
@@ -229,6 +231,7 @@ class StateManager():
         while not gameOver:
             if player.rect.y > 569:
                 self.level = 4
+                self.finalScore = score
                 self.stateManager()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -278,6 +281,7 @@ class StateManager():
             dagger.pickUp(player)
             if player.blood <= 0:
                 self.level = 4
+                self.finalScore = score
                 self.stateManager()
             player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
