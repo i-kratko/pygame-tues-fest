@@ -118,7 +118,7 @@ class StateManager():
         platform_surface=pygame.image.load(const.platformPath)
         platform_surface=pygame.transform.scale(platform_surface, (178, 52))
         platform_list = pygame.sprite.Group()
-        platform_height= [175, 275, 375 , 475]
+        platform_height= [175, 275, 375]
         spawn_platform=pygame.USEREVENT 
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)    
         spawn_enemy=pygame.USEREVENT+1
@@ -145,7 +145,7 @@ class StateManager():
             blood_rect = blood_surface.get_rect(center=(110, 80))
             display.blit(blood_surface, blood_rect)
         def create_platform():
-                platform_y_position=platform_height[0]
+                platform_y_position=random.choice(platform_height)
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath)
                 return new_platform
         def move_platforms(platforms):
@@ -191,6 +191,8 @@ class StateManager():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    player.animateSelf()
                 #KEYDOWN EVENTS
                 if event.type==spawn_platform:
                     platform_list.add(create_platform())
@@ -227,6 +229,7 @@ class StateManager():
                     testTrigger.action()
 
             player.update()
+            player.updateSprite()
             dagger.pickUp(player)
             if player.rect.bottom > 450:
                 const.playerMovement += const.gravity
@@ -236,7 +239,7 @@ class StateManager():
             checkPlatformCollisionWithPLayer(platform_list)
 
             display.blit(player.image,(player.rect.x, player.rect.y))
-            display.blit(boss.image, (boss.rect.x, boss.rect.y))
+            #display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
             score += 0.04
             #platform_list = move_platforms(platform_list) 

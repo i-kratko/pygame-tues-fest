@@ -7,7 +7,13 @@ import const
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, spritePath, blood):
         super().__init__()
-        self.image = pygame.image.load(spritePath)
+        self.attackSprites = []
+        self.isAnimating = False
+        self.attackSprites.append(pygame.image.load("Graphics/Player/Run.png"))
+        self.attackSprites.append(pygame.image.load("Graphics/Player/animation-2.png.png"))
+        self.attackSprites.append(pygame.image.load("Graphics/Player/animation-1.png.png"))
+        self.currentSprite = 0
+        self.image = self.attackSprites[self.currentSprite]
         self.rect = self.image.get_rect()
         self.x = int(x)
         self.y = int(y)
@@ -21,10 +27,22 @@ class Player(pygame.sprite.Sprite):
         self.isStanding = False
         self.speed = 10
         self.blood = blood
+    
+    def animateSelf(self):
+        self.isAnimating = True
+
+    def updateSprite(self):
+        if self.isAnimating == True:
+            self.currentSprite += 0.16
+            if self.currentSprite >= len(self.attackSprites):
+                self.currentSprite = 0
+                self.isAnimating = False
+            
+            self.image = self.attackSprites[int(self.currentSprite)]
 
     def isStandingOnPlatform(self):
-            if self.isStanding:
-                self.velY = 0
+        if self.isStanding:
+            self.velY = 0
 
     #function to handle player movement
     def update(self):
