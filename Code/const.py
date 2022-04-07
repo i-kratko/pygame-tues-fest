@@ -7,12 +7,13 @@ playerMovement = 0
 gravity = 0.5
 isJumped = False
 spawn_platform_time=4000
+enemyAnimationTime = 1500
 ##### COLORS #####
 black = [0, 0, 0]
 white = [255, 255, 255]
 red_blood=[102, 0, 0]
 ##### AUDIO PATHS #####
-bryhsound = "Audio/bryh.wav" 
+ 
 ##### SPRITE PATHS #####
 playerSpritePath = "Graphics\Player\Run.png"
 daggerSpritePath = "Graphics\Weapons\sword.png.png"
