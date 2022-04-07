@@ -4,7 +4,6 @@ import random
 from sys import exit
 from boss import Boss
 import const
-from Score import display_score
 from weapon import Weapon
 from player import Player
 from button import Button
@@ -173,14 +172,20 @@ class StateManager():
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
         blood_font = get_font(20)
-        
+        #score
+        score = 0
+        score_font = get_font(20)
+        def display_score():
+            score_surface = score_font.render(f'Score:{int(score)}', True, const.white)
+            score_rect = score_surface.get_rect(center=(700, 80))
+            display.blit(score_surface, score_rect)
         def display_blood():
             blood_surface=blood_font.render(f'Health:{int(player.blood)}', True, const.red_blood)
             blood_rect = blood_surface.get_rect(center=(110, 80))
             display.blit(blood_surface, blood_rect)
         def create_platform():
                 platform_y_position=random.choice(platform_height)
-                new_platform = Platform(900, platform_y_position, const.platformSpritePath)
+                new_platform = Platform(800, platform_y_position, const.platformSpritePath)
                 return new_platform
         def move_platforms(platforms):
             for platform in platforms:
@@ -217,12 +222,12 @@ class StateManager():
                     
 
         #sounds 
-        bryh_sound=pygame.mixer.Sound(const.bryhsound)
+
 
         #TODO: change the background
 
         while not gameOver:
-            if player.rect.y > 800:
+            if player.rect.y > 569:
                 self.level = 4
                 self.stateManager()
             for event in pygame.event.get():
@@ -246,13 +251,10 @@ class StateManager():
                         const.isJumped = True
                     if event.key == pygame.K_a:
                         player.leftPressed = True
-                        bryh_sound.play()
                     if event.key == pygame.K_d:
                         player.rightPressed = True
-                        bryh_sound.play()
                     if event.key == pygame.K_SPACE:
                         player.jumpPressed = True
-                        bryh_sound.play()
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
                             self.level = 1
@@ -265,13 +267,14 @@ class StateManager():
                         player.rightPressed = False
                     if event.key == pygame.K_SPACE:
                         player.jumpPressed = False
-                        #bryh_sound.play()
 
                 if player.rect.colliderect(testTrigger.rect):
                     testTrigger.action()
 
             player.update()
             player.updateSprite()
+            enemy.update()
+            enemy.updateSprite()
             dagger.pickUp(player)
             if player.blood <= 0:
                 self.level = 4
@@ -283,8 +286,8 @@ class StateManager():
 
             display.blit(player.image,(player.rect.x, player.rect.y))
             #display.blit(boss.image, (boss.rect.x, boss.rect.y))
-            display_score(display)
-            player.blood -= 0.07
+            display_score()
+            player.blood -= 0.08
             score += 0.04
             #platform_list = move_platforms(platform_list) 
             platform_list.update()
