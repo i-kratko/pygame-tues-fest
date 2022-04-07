@@ -27,6 +27,7 @@ class StateManager():
         bgSurface = pygame.Surface((800,600))
         bgSurface.fill('Green')
 
+
         BACK_BUTTON = Button(280, 500, const.backButtonPath)
 
         while not gameOver:
@@ -46,7 +47,6 @@ class StateManager():
 
             display.blit(bgSurface,(0,0))
             display.blit(BACK_BUTTON.image, (280, 500))
-
             pygame.display.update()
             clock.tick(const.FPS)
 
@@ -211,8 +211,8 @@ class StateManager():
                         bryh_sound.play()
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
-                            pygame.quit()
-                            exit()
+                            self.level = 1
+                            self.stateManager()
                 #KEYUP EVENTS
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_a:
