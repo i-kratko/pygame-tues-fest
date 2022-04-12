@@ -29,4 +29,10 @@ gameBackgroundPath = "Graphics/backgrounds/GameBackground.png"
 platformSpritePath = "Graphics/Platform.png"
 platformPath="Graphics/Platform.png"
 floorPath="Graphics/loop.png"
-##### BUTTON SPRITES ######
+##### LEADERBOARD ######
+firstPlaceName = "VESKO"
+firstPlaceScore = 0
+secondPlaceName = ""
+secondPlaceScore = 0
+thirdPlaceName = ""
+thirdPlaceScore = 0

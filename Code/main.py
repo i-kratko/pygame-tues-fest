@@ -4,6 +4,7 @@ import random
 from sys import exit
 from boss import Boss
 import const
+import saveData
 from weapon import Weapon
 from player import Player
 from button import Button
@@ -16,6 +17,17 @@ def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("Graphics/font.ttf", size)
 
 score = 0
+
+leaderboard = {
+    'firstPlaceName' : "SUS",
+    'firstPlaceScore' : 30,
+    'secondPlaceName' : "SUSSIA",
+    'secondPlaceScore' : 21,
+    'thirdPlaceName' : "KLENDI",
+    'thirdPlaceScore' : 1
+}
+
+leaderboard = saveData.loadData("Code\save.txt")
 
 #bruh
 class StateManager():
@@ -54,6 +66,7 @@ class StateManager():
 
     #TODO: main menu
     def mainMenu(self):
+        print(leaderboard["firstPlaceName"])
         gameOver = False
         mainMenuSound.play()
         bgSurface = pygame.Surface((800,600))
@@ -243,6 +256,7 @@ class StateManager():
                 deathSound.play()
                 self.level = 4
                 self.finalScore = score
+                saveData.saveData("save.txt", leaderboard)
                 self.stateManager()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -274,6 +288,7 @@ class StateManager():
                         if event.key == pygame.K_ESCAPE:
                             self.level = 1
                             ingameSound.stop()
+                            saveData.saveData("save.txt", leaderboard)
                             self.stateManager()
                 #KEYUP EVENTS
                 if event.type == pygame.KEYUP:
