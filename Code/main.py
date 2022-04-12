@@ -190,7 +190,7 @@ class StateManager():
         def create_platform():
             rand = random.randint(0, 100)
             platform_y_position=random.choice(platform_height)
-            if rand <= 33:
+            if rand <= 42:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, True)
                 new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 100)
                 enemy_list.add(new_enemy)
@@ -251,7 +251,7 @@ class StateManager():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     player.animateSelf()
                     for thisEnemy in enemy_list:
-                        if player.rect.colliderect(thisEnemy.rect):
+                        if player.rect.colliderect(thisEnemy.rect) and not thisEnemy.health <= 0:
                             print("bruhhhhhhhhh")
                             thisEnemy.takeDamage(player)
                             score += 10
@@ -286,6 +286,10 @@ class StateManager():
 
                 if player.rect.colliderect(testTrigger.rect):
                     testTrigger.action()
+
+            for thisEnemy in enemy_list:
+                if thisEnemy.rect.colliderect(player.rect) and not thisEnemy.isAnimating:
+                    player.blood -= 0.1
 
             player.update()
             player.updateSprite()
