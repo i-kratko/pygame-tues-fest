@@ -224,6 +224,7 @@ class StateManager():
         def move_enemy(enemies):
             for enemy in enemies:
                 enemy.rect.x-=2
+                enemy.drawEnemy(enemy.rect.x, enemy.rect.y, display)
             return enemies
         def move_weapon(weapons):
             for weapon in weapons:
@@ -233,7 +234,7 @@ class StateManager():
             for platform in platforms:
                 if not platform.isFirst and platform.hasEnemy:
                     enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
-                    enemy.rect.topleft = (platform.rect.centerx-36, platform.rect.top-42)
+                    enemy.rect.topleft = (platform.rect.centerx-30, platform.rect.top-42)
                 if not platform.isFirst and platform.hasWeapon:
                     dagger.drawWeapon(platform.rect.centerx + 30, platform.rect.top-16, display)
                     dagger.rect.topleft = (platform.rect.centerx + 30, platform.rect.top-16)
@@ -330,13 +331,13 @@ class StateManager():
             display.blit(player.image,(player.rect.x, player.rect.y))
             #display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
-            enemy_list = move_enemy(enemy_list)
-            weapon_list = move_weapon(weapon_list)
             player.blood -= 0.08
             score += 0.04
             #platform_list = move_platforms(platform_list) 
             platform_list.update()
             draw_platforms(platform_list)
+            enemy_list = move_enemy(enemy_list)
+            weapon_list = move_weapon(weapon_list)
             #draw_enemy(enemy_list)
             display_blood()
             
