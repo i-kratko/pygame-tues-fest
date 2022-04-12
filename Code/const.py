@@ -17,6 +17,7 @@ red_blood=[102, 0, 0]
 ##### SPRITE PATHS #####
 playerSpritePath = "Graphics\Player\Run.png"
 daggerSpritePath = "Graphics\Weapons\sword.png.png"
+swordSpritePath = "Graphics\Weapons\yellowSword.png"
 bossSpritePath = "Graphics/Bosses/boss_4.png"
 enemySpritePath = "Graphics/Enemies/enemy2.png"
 playButtonPath = "Graphics/playbutton.png"

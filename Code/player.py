@@ -7,12 +7,12 @@ import const
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, spritePath, blood, weapon):
         super().__init__()
-        self.attackSprites = []
         self.isAnimating = False
+        self.currentSprite = 0
+        self.attackSprites = []  
         self.attackSprites.append(pygame.image.load("Graphics/Player/idle.png"))
         self.attackSprites.append(pygame.image.load("Graphics/Player/swing1.png"))
         self.attackSprites.append(pygame.image.load("Graphics/Player/swing2.png"))
-        self.currentSprite = 0
         self.image = self.attackSprites[self.currentSprite]
         self.rect = self.image.get_rect()
         self.x = int(x)
@@ -28,18 +28,25 @@ class Player(pygame.sprite.Sprite):
         self.speed = 10
         self.blood = blood
         self.weapon = weapon
+
+    def animationDos(self):
+        self. attackSprites.clear()
+        self.attackSprites.append(pygame.image.load("Graphics/Player/idle.png"))
+        self.attackSprites.append(pygame.image.load("Graphics/Player/swing3.png.png"))
+        self.attackSprites.append(pygame.image.load("Graphics/Player/swing4.png.png"))
+        self.image = self.attackSprites[int(self.currentSprite)]
     
     def animateSelf(self):
         self.isAnimating = True
 
     def updateSprite(self):
-        if self.isAnimating == True:
-            self.currentSprite += 0.16
-            if self.currentSprite >= len(self.attackSprites):
-                self.currentSprite = 0
-                self.isAnimating = False
-            
-            self.image = self.attackSprites[int(self.currentSprite)]
+            if self.isAnimating == True:
+                self.currentSprite += 0.16
+                if self.currentSprite >= len(self.attackSprites):
+                    self.currentSprite = 0
+                    self.isAnimating = False
+                
+                self.image = self.attackSprites[int(self.currentSprite)]
 
     def isStandingOnPlatform(self):
         if self.isStanding:

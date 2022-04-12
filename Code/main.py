@@ -182,11 +182,13 @@ class StateManager():
         firstPlatform = Platform(20, 200, const.platformPath, True, False, False)
         platform_list.add(firstPlatform)
         #creating the player
-        dagger = Weapon(350,418, const.daggerSpritePath, 20)
+        dagger = Weapon(350,418, const.daggerSpritePath, 30)
+        sword = Weapon(350,418, const.swordSpritePath, 20)
         player = Player(40, 100, const.playerSpritePath, 100, dagger)
-        enemy = Enemy(500, 392, const.enemySpritePath, 100)
+        enemy = Enemy(500, 392, const.enemySpritePath, 120)
         enemy_list = pygame.sprite.Group()
         weapon_list = pygame.sprite.Group()
+        sword_list = pygame.sprite.Group()
         boss = Boss(0, 0, const.bossSpritePath, 500)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
@@ -205,13 +207,13 @@ class StateManager():
         def create_platform():
             rand = random.randint(0, 100)
             platform_y_position=random.choice(platform_height)
-            if rand <= 42:
+            if rand <= 55:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, True, False)
-                new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 100)
+                new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 120)
                 enemy_list.add(new_enemy)
-            if rand >=76:
+            if rand <=4 or rand >= 96:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False, True)
-                new_weapon = Weapon(new_platform.rect.centerx + 30, new_platform.rect.top-16, const.daggerSpritePath, 100)
+                new_weapon = Weapon(new_platform.rect.centerx + 30, new_platform.rect.top-16, const.swordSpritePath, 100)
                 weapon_list.add(new_weapon)
             else:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False, False)
@@ -224,7 +226,7 @@ class StateManager():
         def move_enemy(enemies):
             for enemy in enemies:
                 enemy.rect.x-=2
-                enemy.drawEnemy(enemy.rect.x, enemy.rect.y, display)
+                enemy.drawEnemy(enemy.rect.x-37, enemy.rect.y, display)
             return enemies
         def move_weapon(weapons):
             for weapon in weapons:
@@ -236,8 +238,8 @@ class StateManager():
                     enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
                     enemy.rect.topleft = (platform.rect.centerx-30, platform.rect.top-42)
                 if not platform.isFirst and platform.hasWeapon:
-                    dagger.drawWeapon(platform.rect.centerx + 30, platform.rect.top-16, display)
-                    dagger.rect.topleft = (platform.rect.centerx + 30, platform.rect.top-16)
+                    sword.drawWeapon(platform.rect.centerx + 30, platform.rect.top-16, display)
+                    sword.rect.topleft = (platform.rect.centerx + 30, platform.rect.top-16)
         
                 #dagger.drawWeapon(platform.rect.centerx+30, platform.rect.top-16, display)
                 display.blit(platform.image, (platform.x, platform.y))
@@ -272,6 +274,8 @@ class StateManager():
                         if player.rect.colliderect(thisEnemy.rect) and not thisEnemy.health <= 0:
                             print("bruhhhhhhhhh")
                             thisEnemy.takeDamage(player)
+                            if player.blood < 100:
+                                player.blood += 6
                             score += 10
                 #KEYDOWN EVENTS
                 if event.type==spawn_platform:
@@ -311,8 +315,8 @@ class StateManager():
                     player.blood -= 0.1
             for thisWeapon in weapon_list:
                 if player.rect.colliderect(thisWeapon):
-                    thisWeapon.pickUp()
-
+                    player.animationDos()
+                    player.weapon = sword
             player.update()
             enemy.update()
             player.updateSprite()
