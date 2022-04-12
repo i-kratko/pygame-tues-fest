@@ -2,7 +2,7 @@ import pygame
 import const
 
 class Platform(pygame.sprite.Sprite):
-    def __init__(self, x, y, spritePath, isFirst):
+    def __init__(self, x, y, spritePath, isFirst, hasEnemy):
         super().__init__()
         self.image = pygame.image.load(spritePath)
         self.image = pygame.transform.scale(self.image, (178, 52))
@@ -12,6 +12,7 @@ class Platform(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
         self.isFirst = isFirst
+        self.hasEnemy = hasEnemy
         self.timer = 420
 
     def update(self):

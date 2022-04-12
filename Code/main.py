@@ -165,7 +165,7 @@ class StateManager():
         ##PLAT COUNTER
         self.platformCounter = 0
         #first platfrom
-        firstPlatform = Platform(20, 200, const.platformPath, True)
+        firstPlatform = Platform(20, 200, const.platformPath, True, False)
         platform_list.add(firstPlatform)
         #creating the player
         player = Player(40, 100, const.playerSpritePath, 100, 20)
@@ -188,10 +188,14 @@ class StateManager():
             blood_rect = blood_surface.get_rect(center=(110, 80))
             display.blit(blood_surface, blood_rect)
         def create_platform():
+            rand = random.randint(0, 100)
             platform_y_position=random.choice(platform_height)
-            new_platform = Platform(900, platform_y_position, const.platformSpritePath, False)
-            new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 100)
-            enemy_list.add(new_enemy)
+            if rand <= 33:
+                new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, True)
+                new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 100)
+                enemy_list.add(new_enemy)
+            else:
+                new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False)
             return new_platform
         def move_platforms(platforms):
             for platform in platforms:
@@ -200,7 +204,7 @@ class StateManager():
             return platforms
         def draw_platforms(platforms):
             for platform in platforms:
-                if not platform.isFirst:
+                if not platform.isFirst and platform.hasEnemy:
                     enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
                     enemy.rect.topleft = (platform.rect.centerx-36, platform.rect.top-42)
                 
@@ -336,7 +340,7 @@ ingameSound = pygame.mixer.Sound("Audio/ingame.wav")
 deathSound.set_volume(0.5)
 mainMenuSound.set_volume(0.06)
 ingameSound.set_volume(0.035)
-display = pygame.display.set_mode((const.disW, const.disH), pygame.FULLSCREEN)
+display = pygame.display.set_mode((const.disW, const.disH))
 pygame.display.set_caption(const.gameName)
 clock = pygame.time.Clock()
      

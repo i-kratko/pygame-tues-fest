@@ -1,6 +1,6 @@
 ##### CONFIG #####
 disW = 800
-disH = 400
+disH = 600
 gameName = "Game"
 FPS = 60
 playerMovement = 0
