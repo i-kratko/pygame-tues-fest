@@ -1,4 +1,5 @@
 from pickle import TRUE
+from shutil import move
 import pygame
 import random
 from sys import exit
@@ -173,19 +174,20 @@ class StateManager():
         platform_list = pygame.sprite.Group()
         platform_height= [175, 275, 375]
         spawn_platform=pygame.USEREVENT 
+        spawn_enemy=pygame.USEREVENT
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)    
-        spawn_enemy=pygame.USEREVENT+1
         ##PLAT COUNTER
         self.platformCounter = 0
         #first platfrom
-        firstPlatform = Platform(20, 200, const.platformPath, True, False)
+        firstPlatform = Platform(20, 200, const.platformPath, True, False, False)
         platform_list.add(firstPlatform)
         #creating the player
-        player = Player(40, 100, const.playerSpritePath, 100, 20)
+        dagger = Weapon(350,418, const.daggerSpritePath, 20)
+        player = Player(40, 100, const.playerSpritePath, 100, dagger)
         enemy = Enemy(500, 392, const.enemySpritePath, 100)
         enemy_list = pygame.sprite.Group()
+        weapon_list = pygame.sprite.Group()
         boss = Boss(0, 0, const.bossSpritePath, 500)
-        dagger = Weapon(350,418, const.daggerSpritePath, 20)
         playerGroup = pygame.sprite.Group()
         playerGroup.add(player)
         blood_font = get_font(20)
@@ -204,37 +206,40 @@ class StateManager():
             rand = random.randint(0, 100)
             platform_y_position=random.choice(platform_height)
             if rand <= 42:
-                new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, True)
+                new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, True, False)
                 new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 100)
                 enemy_list.add(new_enemy)
+            if rand >=76:
+                new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False, True)
+                new_weapon = Weapon(new_platform.rect.centerx + 30, new_platform.rect.top-16, const.daggerSpritePath, 100)
+                weapon_list.add(new_weapon)
             else:
-                new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False)
+                new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False, False)
             return new_platform
         def move_platforms(platforms):
             for platform in platforms:
                 if platform != firstPlatform:
                     platform.update()
             return platforms
+        def move_enemy(enemies):
+            for enemy in enemies:
+                enemy.rect.x-=2
+            return enemies
+        def move_weapon(weapons):
+            for weapon in weapons:
+                weapon.rect.x-=2
+            return weapons
         def draw_platforms(platforms):
             for platform in platforms:
                 if not platform.isFirst and platform.hasEnemy:
                     enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
                     enemy.rect.topleft = (platform.rect.centerx-36, platform.rect.top-42)
-                
+                if not platform.isFirst and platform.hasWeapon:
+                    dagger.drawWeapon(platform.rect.centerx + 30, platform.rect.top-16, display)
+                    dagger.rect.topleft = (platform.rect.centerx + 30, platform.rect.top-16)
+        
                 #dagger.drawWeapon(platform.rect.centerx+30, platform.rect.top-16, display)
                 display.blit(platform.image, (platform.x, platform.y))
-        def create_enemy(): 
-            enemy_x_position=random.choice(platform_height)
-            new_enemy = Enemy(500, enemy_x_position+30, const.enemySpritePath, 100)
-            new_enemy=new_enemy.rect(midbottom=(300, enemy_x_position+30))
-            return new_enemy
-        def move_enemy(enemies):
-            for enemy in enemies:
-                enemy.rect.x-=2
-            return enemies
-        def draw_enemy(enemies):
-            for enemy in enemies:
-                display.blit(enemy.image, enemy)
 
         def checkPlatformCollisionWithPLayer(platforms):
             for platform in platforms:
@@ -246,8 +251,6 @@ class StateManager():
                 #TODO
                 #if platform.x < -200:
                     
-
-
         #TODO: change the background
 
         while not gameOver:
@@ -305,12 +308,14 @@ class StateManager():
             for thisEnemy in enemy_list:
                 if thisEnemy.rect.colliderect(player.rect) and not thisEnemy.isAnimating:
                     player.blood -= 0.1
+            for thisWeapon in weapon_list:
+                if player.rect.colliderect(thisWeapon):
+                    thisWeapon.pickUp()
 
             player.update()
-            player.updateSprite()
             enemy.update()
+            player.updateSprite()
             enemy.updateSprite()
-            dagger.pickUp(player)
             if player.blood <= 0:
                 ingameSound.stop()
                 deathSound.play()
@@ -325,12 +330,13 @@ class StateManager():
             display.blit(player.image,(player.rect.x, player.rect.y))
             #display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
+            enemy_list = move_enemy(enemy_list)
+            weapon_list = move_weapon(weapon_list)
             player.blood -= 0.08
             score += 0.04
             #platform_list = move_platforms(platform_list) 
             platform_list.update()
             draw_platforms(platform_list)
-            enemy_list=move_enemy(enemy_list)
             #draw_enemy(enemy_list)
             display_blood()
             

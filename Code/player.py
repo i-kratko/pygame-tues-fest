@@ -5,7 +5,7 @@ import const
 #rework class to remove vertical movement
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, spritePath, blood, damage):
+    def __init__(self, x, y, spritePath, blood, weapon):
         super().__init__()
         self.attackSprites = []
         self.isAnimating = False
@@ -27,7 +27,7 @@ class Player(pygame.sprite.Sprite):
         self.isStanding = False
         self.speed = 10
         self.blood = blood
-        self.damage = damage
+        self.weapon = weapon
     
     def animateSelf(self):
         self.isAnimating = True

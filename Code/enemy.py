@@ -48,7 +48,7 @@ class Enemy(pygame.sprite.Sprite):
         display.blit(self.image, (x,y))
 
     def takeDamage(self, player):
-        self.health -= player.damage
+        self.health -= player.weapon.damage
         if player.blood < 100:
             player.blood += 3
         if self.health <= 0:
