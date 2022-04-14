@@ -43,7 +43,7 @@ class StateManager():
         bgSurface = pygame.Surface((800,600))
         bgSurface.fill('Green')
 
-        BACK_BUTTON = Button(280, 500, const.backButtonPath)
+        BACK_BUTTON = Button(280, 450, const.backButtonPath)
 
         while not gameOver:
             for event in pygame.event.get():
@@ -198,7 +198,7 @@ class StateManager():
         platform_surface=pygame.image.load(const.platformPath)
         platform_surface=pygame.transform.scale(platform_surface, (178, 52))
         platform_list = pygame.sprite.Group()
-        platform_height= [175, 275, 375]
+        platform_height= [190, 250, 310]
         spawn_platform=pygame.USEREVENT 
         spawn_enemy=pygame.USEREVENT
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)    
@@ -237,7 +237,7 @@ class StateManager():
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, True, False)
                 new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 120)
                 enemy_list.add(new_enemy)
-            if rand <=4 or rand >= 96:
+            if rand <=95 or rand >= 96:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False, True)
                 new_weapon = Weapon(new_platform.rect.centerx + 30, new_platform.rect.top-16, const.swordSpritePath, 100)
                 weapon_list.add(new_weapon)
@@ -343,6 +343,7 @@ class StateManager():
                 if player.rect.colliderect(thisWeapon):
                     player.animationDos()
                     player.weapon = sword
+                    weapon_list.remove(thisWeapon)
             player.update()
             enemy.update()
             player.updateSprite()

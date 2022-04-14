@@ -6,7 +6,7 @@ import const
 import random
 
 class Weapon(pygame.sprite.Sprite):
-    def __init__(self, x, y, spritePath, damage):
+    def __init__(self, x, y, spritePath, healthRestore):
         super().__init__()
         self.image = pygame.image.load(spritePath)
         self.image = pygame.transform.scale(self.image, (28, 30))
@@ -15,14 +15,8 @@ class Weapon(pygame.sprite.Sprite):
         self.y = int(y)
         self.rect.x = self.x
         self.rect.y = self.y
-        self.damage = int(damage)
-    
-    def drawWeapon(self, x, y, display):
-        display.blit(self.image, (x,y))
+        self.healthRestore = healthRestore
 
-    def pickUp(self):
-        self.image.fill((0, 0, 0, 0))
+    def restoreHealth(self, player):
+        player.health += self.healthRestore
     
-    def dealDamage(self, enemy):
-        enemy.hitpoints -= self.damage
-        print(enemy.hitpoints)
