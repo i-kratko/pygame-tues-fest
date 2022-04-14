@@ -82,7 +82,7 @@ class Player(pygame.sprite.Sprite):
         self.isStandingOnPlatform()
 
         if self.jumpPressed is True and self.isStanding:
-            self.velY -= 300
+            self.velY -= 200
 
         self.x += self.velX
         self.y += self.velY

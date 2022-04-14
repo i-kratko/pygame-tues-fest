@@ -37,11 +37,11 @@ class StateManager():
         self.level = 1
         self.finalScore = 1
 
-    def options(self):
+    def leaderboard(self):
         gameOver = False
 
         bgSurface = pygame.Surface((800,600))
-        bgSurface.fill('Blue')
+        bgSurface.fill('Green')
 
         BACK_BUTTON = Button(280, 500, const.backButtonPath)
 
@@ -61,7 +61,7 @@ class StateManager():
                         self.stateManager()
 
             display.blit(bgSurface,(0,0))
-            display.blit(BACK_BUTTON.image, (280, 500))
+            display.blit(BACK_BUTTON.image, (280, 450))
             pygame.display.update()
             clock.tick(const.FPS)
 
@@ -79,7 +79,7 @@ class StateManager():
         MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
 
         PLAY_BUTTON = Button(280, 150, const.playButtonPath)
-        OPTIONS_BUTTON = Button(220,280, const.optionsButtonPath)
+        LEADERBOARD_BUTTON = Button(220,280, const.leaderboardButtonPath)
         QUIT_BUTTON = Button(280, 410, const.quitButtonPath)
         
         buttonGroup = pygame.sprite.Group()
@@ -97,7 +97,7 @@ class StateManager():
                         mainMenuSound.stop()
                         ingameSound.play()
                         self.stateManager()
-                    if OPTIONS_BUTTON.rect.collidepoint(pos):
+                    if LEADERBOARD_BUTTON.rect.collidepoint(pos):
                         self.level = 3
                         self.stateManager()
                     if QUIT_BUTTON.rect.collidepoint(pos):
@@ -111,7 +111,7 @@ class StateManager():
             display.blit(bgSurface,(0,0))
             display.blit(MENU_TEXT, (85, 33))
             display.blit(PLAY_BUTTON.image, (280, 150))
-            display.blit(OPTIONS_BUTTON.image, (220,280))
+            display.blit(LEADERBOARD_BUTTON.image, (95,280))
             display.blit(QUIT_BUTTON.image, (280,410))
 
             pygame.display.update()
@@ -126,7 +126,7 @@ class StateManager():
         gameOver_TEXT = get_font(72).render("GAME OVER", True, "#ffffff")  
         QUIT_BUTTON = Button(280, 410, const.quitGameOverButtonPath)
         pressButton1 = get_font(20).render("press any key to", True, "#ffffff")  
-        pressButton2 = get_font(20).render("return to the Main Menu", True, "#ffffff")  
+        pressButton2 = get_font(20).render("continue", True, "#ffffff")  
 
         while not gameOver:
             for event in pygame.event.get():
@@ -147,8 +147,8 @@ class StateManager():
             display.blit(bgSurface,(0,0))
             display.blit(scoreText, (170,110))
             display.blit(gameOver_TEXT, (75,220))
-            display.blit(pressButton1, (215,335))
-            display.blit(pressButton2, (155,370))
+            display.blit(pressButton1, (225,335))
+            display.blit(pressButton2, (310,370))
             display.blit(QUIT_BUTTON.image, (280,450))
 
             pygame.display.update()
@@ -355,7 +355,7 @@ class StateManager():
         if self.level == 2:
             self.game()
         if self.level == 3:
-            self.options()
+            self.leaderboard()
         if self.level == 4:
             self.game_Over()
             
