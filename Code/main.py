@@ -154,7 +154,7 @@ class StateManager():
         bgSurface.fill('Black')
         gameOver_TEXT = get_font(48).render("ENTER YOUR NAME", True, "#ffffff")  
         QUIT_BUTTON = Button(280, 410, const.quitGameOverButtonPath)
-        pressButton1 = get_font(20).render("press any key to", True, "#ffffff")  
+        pressButton1 = get_font(20).render("press ENTER key to", True, "#ffffff")  
         pressButton2 = get_font(20).render("continue", True, "#ffffff")  
 
         while not gameOver:
@@ -175,16 +175,9 @@ class StateManager():
 
 
             display.blit(bgSurface,(0,0))
-<<<<<<< Updated upstream
-            display.blit(scoreText, (170,110))
-            display.blit(gameOver_TEXT, (75,220))
+            display.blit(gameOver_TEXT, (40,100))
             display.blit(pressButton1, (225,335))
             display.blit(pressButton2, (310,370))
-=======
-            display.blit(gameOver_TEXT, (40,100))
-            display.blit(pressButton1, (215,335))
-            display.blit(pressButton2, (155,370))
->>>>>>> Stashed changes
             display.blit(QUIT_BUTTON.image, (280,450))
 
             pygame.display.update()
