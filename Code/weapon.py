@@ -19,6 +19,9 @@ class Weapon(pygame.sprite.Sprite):
     
     def drawWeapon(self, x, y, display):
         display.blit(self.image, (x,y))
+
+    def pickUp(self):
+        self.image.fill((0, 0, 0, 0))
     
     def dealDamage(self, enemy):
         enemy.hitpoints -= self.damage
