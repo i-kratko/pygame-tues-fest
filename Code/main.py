@@ -282,13 +282,34 @@ class StateManager():
                     
         #TODO: change the background
 
+        def checkIfRecrod():
+            while 1:
+                if score > leaderboard["thirdPlaceScore"]:
+                    if score > leaderboard["secondPlaceScore"]:
+                        if score > leaderboard["firstPlaceScore"]:
+                            leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
+                            leaderboard["secondPlaceScore"] = leaderboard["firstPlaceScore"]
+                            leaderboard["firstPlaceScore"] = int(self.finalScore)
+                            print(leaderboard["firstPlaceScore"])
+                            break
+
+                        leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
+                        leaderboard["secondPlaceScore"] = int(self.finalScore)
+                        print(leaderboard["secondPlaceScore"])
+                        break
+
+                    leaderboard["thirdPlaceScore"] = int(self.finalScore)
+                    print(leaderboard["thirdPlaceScore"])
+                    break
+
         while not gameOver:
             if player.rect.y > 569:
                 ingameSound.stop()
                 deathSound.play()
                 self.level = 4
                 self.finalScore = score
-                saveData.saveData("save.txt", leaderboard)
+                checkIfRecrod()
+                saveData.saveData("Code\save.txt", leaderboard)
                 self.stateManager()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

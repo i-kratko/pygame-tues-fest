@@ -1,1 +1,0 @@
-{"firstPlaceName": "AMOGUS", "firstPlaceScore": 30, "secondPlaceName": "SUSSIA", "secondPlaceScore": 21, "thirdPlaceName": "KLENDI", "thirdPlaceScore": 1}
