@@ -87,6 +87,6 @@ class Player(pygame.sprite.Sprite):
         self.x += self.velX
         self.y += self.velY
 
-        self.rect = pygame.Rect(int(self.x), int(self.y), 55, 58)        
+        self.rect = pygame.Rect(int(self.x), int(self.y), 55, 56)        
 
         
