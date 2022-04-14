@@ -141,8 +141,8 @@ class StateManager():
             display.blit(bgSurface,(0,0))
             display.blit(scoreText, (170,110))
             display.blit(gameOver_TEXT, (75,220))
-            display.blit(pressButton1, (215,335))
-            display.blit(pressButton2, (300,370))
+            display.blit(pressButton1, (225,420))
+            display.blit(pressButton2, (308,455))
 
             pygame.display.update()
             clock.tick(const.FPS)
@@ -176,8 +176,8 @@ class StateManager():
 
             display.blit(bgSurface,(0,0))
             display.blit(gameOver_TEXT, (40,100))
-            display.blit(pressButton1, (225,335))
-            display.blit(pressButton2, (310,370))
+            display.blit(pressButton1, (210,335))
+            display.blit(pressButton2, (314,370))
             display.blit(QUIT_BUTTON.image, (280,450))
 
             pygame.display.update()
@@ -205,7 +205,7 @@ class StateManager():
         ##PLAT COUNTER
         self.platformCounter = 0
         #first platfrom
-        firstPlatform = Platform(20, 200, const.platformPath, True, False, False)
+        firstPlatform = Platform(20, 200, const.platformSpritePath, True, False, False)
         platform_list.add(firstPlatform)
         #creating the player
         dagger = Weapon(350,418, const.daggerSpritePath, 30)
@@ -399,7 +399,7 @@ ingameSound = pygame.mixer.Sound("Audio/ingame.wav")
 deathSound.set_volume(0.5)
 mainMenuSound.set_volume(0.06)
 ingameSound.set_volume(0.035)
-display = pygame.display.set_mode((const.disW, const.disH))
+display = pygame.display.set_mode((const.disW, const.disH), pygame.FULLSCREEN)
 pygame.display.set_caption(const.gameName)
 clock = pygame.time.Clock()
      
