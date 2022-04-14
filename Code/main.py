@@ -124,6 +124,35 @@ class StateManager():
         bgSurface.fill('Black')
         scoreText = get_font(45).render(f'SCORE: {int(self.finalScore)}', True, "#ffffff")
         gameOver_TEXT = get_font(72).render("GAME OVER", True, "#ffffff")  
+        pressButton1 = get_font(20).render("press any key to", True, "#ffffff")  
+        pressButton2 = get_font(20).render("continue", True, "#ffffff")  
+
+        while not gameOver:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    ingameSound.stop()
+                    pygame.quit()
+                    exit()
+                if event.type == pygame.KEYDOWN:
+                    self.level = 5
+                    self.stateManager()
+
+
+            display.blit(bgSurface,(0,0))
+            display.blit(scoreText, (170,110))
+            display.blit(gameOver_TEXT, (75,220))
+            display.blit(pressButton1, (215,335))
+            display.blit(pressButton2, (300,370))
+
+            pygame.display.update()
+            clock.tick(const.FPS)
+
+
+    def enterNameScreen(self):
+        gameOver = False
+        bgSurface = pygame.Surface((800,600))
+        bgSurface.fill('Black')
+        gameOver_TEXT = get_font(48).render("ENTER YOUR NAME", True, "#ffffff")  
         QUIT_BUTTON = Button(280, 410, const.quitGameOverButtonPath)
         pressButton1 = get_font(20).render("press any key to", True, "#ffffff")  
         pressButton2 = get_font(20).render("continue", True, "#ffffff")  
@@ -140,22 +169,26 @@ class StateManager():
                         pygame.quit()
                         exit()
                 if event.type == pygame.KEYDOWN:
-                    self.level = 1
-                    self.stateManager()
+                    if event.key == pygame.K_RETURN:
+                        self.level = 1
+                        self.stateManager()
 
 
             display.blit(bgSurface,(0,0))
+<<<<<<< Updated upstream
             display.blit(scoreText, (170,110))
             display.blit(gameOver_TEXT, (75,220))
             display.blit(pressButton1, (225,335))
             display.blit(pressButton2, (310,370))
+=======
+            display.blit(gameOver_TEXT, (40,100))
+            display.blit(pressButton1, (215,335))
+            display.blit(pressButton2, (155,370))
+>>>>>>> Stashed changes
             display.blit(QUIT_BUTTON.image, (280,450))
 
             pygame.display.update()
             clock.tick(const.FPS)
-
-
-
 
     #game loop
     def game(self):
@@ -358,6 +391,8 @@ class StateManager():
             self.leaderboard()
         if self.level == 4:
             self.game_Over()
+        if self.level == 5:
+            self.enterNameScreen()
             
             
 
