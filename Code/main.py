@@ -19,7 +19,6 @@ def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("Graphics/font.ttf", size)
 
 score = 0
-name = "BRUH"
 
 leaderboard = {
     'firstPlaceName' : "SUS",
@@ -42,6 +41,7 @@ class StateManager():
     def __init__(self):
         self.level = 1
         self.finalScore = 1
+        self.name = 'Br'
 
     def leaderboard(self):
         gameOver = False
@@ -181,6 +181,10 @@ class StateManager():
         bgSurface = pygame.Surface((800,600))
         bgSurface.fill('Black')
         gameOver_TEXT = get_font(48).render("ENTER YOUR NAME", True, "#ffffff")  
+        thisName = ''
+        NAME_TEXT = get_font(48).render(f'{thisName}', True, "#ffffff")  
+        NAME_TEXT_RECT = NAME_TEXT.get_rect()
+        NAME_TEXT_RECT.centerx = const.disW / 2
         QUIT_BUTTON = Button(280, 410, const.quitGameOverButtonPath)
         pressButton1 = get_font(20).render("press ENTER key to", True, "#ffffff")  
         pressButton2 = get_font(20).render("continue", True, "#ffffff")  
@@ -197,19 +201,77 @@ class StateManager():
                         pygame.quit()
                         exit()
                 if event.type == pygame.KEYDOWN:
+                    thisName += event.unicode
+                    print(thisName)
+                    NAME_TEXT = get_font(48).render(f'{thisName}', True, "#ffffff") 
+                    NAME_TEXT_RECT = NAME_TEXT.get_rect()
+                    NAME_TEXT_RECT.centerx = const.disW / 2 
                     if event.key == pygame.K_RETURN:
                         self.level = 1
+                        self.name = thisName
+                        self.checkIfRecrod()
                         self.stateManager()
 
 
             display.blit(bgSurface,(0,0))
             display.blit(gameOver_TEXT, (40,100))
+            display.blit(NAME_TEXT, (NAME_TEXT_RECT.x,225))
             display.blit(pressButton1, (210,335))
             display.blit(pressButton2, (314,370))
             display.blit(QUIT_BUTTON.image, (280,450))
 
             pygame.display.update()
             clock.tick(const.FPS)
+
+    def checkIfRecrod(self):
+        while 1:
+            print("AMA VERNO")
+            if score > leaderboard["fifthPlaceScore"]:
+                if score > leaderboard["fourthPlaceScore"]:
+                    if score > leaderboard["thirdPlaceScore"]:
+                        if score > leaderboard["secondPlaceScore"]:
+                            if score > leaderboard["firstPlaceScore"]:
+                                #1 place
+                                leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                                leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                                leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
+                                leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
+                                leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
+                                leaderboard["thirdPlaceName"] = leaderboard["secondPlaceName"]
+                                leaderboard["secondPlaceScore"] = leaderboard["firstPlaceScore"]
+                                leaderboard["secondPlaceName"] = leaderboard["firstPlaceName"]
+                                leaderboard["firstPlaceScore"] = int(score)
+                                leaderboard["firstPlaceName"] = self.name
+                                break
+                            #2 place
+                            leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                            leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                            leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
+                            leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
+                            leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
+                            leaderboard["thirdPlaceName"] = leaderboard["secondPlaceName"]
+                            leaderboard["secondPlaceScore"] = int(score)
+                            leaderboard["secondPlaceName"] = self.name
+                            break
+                        #3 place
+                        leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                        leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                        leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
+                        leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
+                        leaderboard["thirdPlaceScore"] = int(score)
+                        leaderboard["thirdPlaceName"] = self.name
+                        break
+                    #4 place
+                    leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                    leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                    leaderboard["fourthPlaceScore"] = int(score)
+                    leaderboard["fourthPlaceName"] = self.name
+                    break
+                #5 place
+                leaderboard["fifthPlaceScore"] = int(score)
+                leaderboard["fifthPlaceName"] = self.name
+                break
+            break
 
     #game loop
     def game(self):
@@ -312,56 +374,7 @@ class StateManager():
                     
         #TODO: change the background
 
-        def checkIfRecrod():
-            while 1:
-                print("AMA VERNO")
-                if score > leaderboard["fifthPlaceScore"]:
-                    if score > leaderboard["fourthPlaceScore"]:
-                        if score > leaderboard["thirdPlaceScore"]:
-                            if score > leaderboard["secondPlaceScore"]:
-                                if score > leaderboard["firstPlaceScore"]:
-                                    #1 place
-                                    leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
-                                    leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
-                                    leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
-                                    leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
-                                    leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
-                                    leaderboard["thirdPlaceName"] = leaderboard["secondPlaceName"]
-                                    leaderboard["secondPlaceScore"] = leaderboard["firstPlaceScore"]
-                                    leaderboard["secondPlaceName"] = leaderboard["firstPlaceName"]
-                                    leaderboard["firstPlaceScore"] = int(score)
-                                    leaderboard["firstPlaceName"] = name
-                                    break
-                                #2 place
-                                leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
-                                leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
-                                leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
-                                leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
-                                leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
-                                leaderboard["thirdPlaceName"] = leaderboard["secondPlaceName"]
-                                leaderboard["secondPlaceScore"] = int(score)
-                                leaderboard["secondPlaceName"] = name
-                                break
-                            #3 place
-                            leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
-                            leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
-                            leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
-                            leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
-                            leaderboard["thirdPlaceScore"] = int(score)
-                            leaderboard["thirdPlaceName"] = name
-                            break
-
-                        #4 place
-                        leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
-                        leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
-                        leaderboard["fourthPlaceScore"] = int(score)
-                        leaderboard["fourthPlaceName"] = name
-                        break
-                    #5 place
-                    leaderboard["fifthPlaceScore"] = int(score)
-                    leaderboard["fifthPlaceName"] = name
-                    break
-                break
+        
 
         while not gameOver:
             if player.rect.y > 569:
@@ -369,7 +382,7 @@ class StateManager():
                 deathSound.play()
                 self.level = 4
                 self.finalScore = score
-                checkIfRecrod()
+                self.checkIfRecrod()
                 saveData.saveData("Code\save.txt", leaderboard)
                 self.stateManager()
             for event in pygame.event.get():
@@ -439,7 +452,7 @@ class StateManager():
                 self.level = 4
                 self.finalScore = score
                 saveData.saveData("Code\save.txt", leaderboard)
-                checkIfRecrod()
+                self.checkIfRecrod()
                 self.stateManager()
             player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
