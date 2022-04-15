@@ -7,15 +7,15 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, spritePath, health):
         super().__init__()
         self.sprites = []
-        self.isAnimating = False
-        self.sprite1 = pygame.image.load("Graphics/Enemies/Enemy Animations/enemy2_1.png.png")
-        self.sprite1 = pygame.transform.scale(self.sprite1, (72, 72))
-        self.sprite2 = pygame.image.load("Graphics/Enemies/Enemy Animations/enemy2_2.png.png")
-        self.sprite2 = pygame.transform.scale(self.sprite2, (72, 72))
-        self.sprites.append(pygame.image.load("Graphics/Enemies/Enemy Animations/enemyIdle.png"))
+        self.currentSprite = 0
+        self.sprite1 = pygame.image.load("Graphics/Enemies/Enemy Animations/dragon-1.png.png")
+        self.sprite2 = pygame.image.load("Graphics/Enemies/Enemy Animations/dragon-2.png.png")
+        self.sprite3 = pygame.image.load("Graphics/Enemies/Enemy Animations/dragon-3.png.png")
+        self.sprite4 = pygame.image.load("Graphics/Enemies/Enemy Animations/dragon-4.png.png")
         self.sprites.append(self.sprite1)
         self.sprites.append(self.sprite2)
-        self.currentSprite = 0
+        self.sprites.append(self.sprite3)
+        self.sprites.append(self.sprite4)
         self.image = pygame.transform.scale(self.sprites[self.currentSprite], (72, 72))
         self.rect = self.image.get_rect()
         self.x = int(x)
@@ -33,12 +33,8 @@ class Enemy(pygame.sprite.Sprite):
         self.speed = 10
         self.health = health
 
-    def stopAnimation(self):
-        self.isAnimating = False
-
-    def updateSprite(self):
-        if self.isAnimating == True:
-            self.currentSprite += 0.25
+    def update(self):
+            self.currentSprite += 0.16
             if self.currentSprite >= len(self.sprites):
                 self.currentSprite = 0
             
@@ -51,7 +47,4 @@ class Enemy(pygame.sprite.Sprite):
         self.health -= player.weapon.damage
         print(self.health)
         if self.health <= 0:
-            self.stun()
-    
-    def stun(self):
-        self.isAnimating = True
+            self.rect.y = -420.69

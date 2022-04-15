@@ -74,7 +74,7 @@ class StateManager():
 
             display.blit(bgSurface,(0,0))
             display.blit(LEADERBOARD, (25, 33))
-            display.blit(FIRST_PLACE, (20, 100))
+            display.blit(FIRST_PLACE, (20, 90))
             display.blit(SECOND_PLACE, (20, 130))
             display.blit(THIRD_PLACE, (20, 160))
             display.blit(FOURTH_PLACE, (20, 190))
@@ -255,7 +255,7 @@ class StateManager():
             platform_y_position=random.choice(platform_height)
             if rand <= 55:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, True, False)
-                new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 120)
+                new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-56, const.enemySpritePath, 120)
                 enemy_list.add(new_enemy)
             if rand <=4 or rand >= 96:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False, True)
@@ -282,7 +282,7 @@ class StateManager():
             for platform in platforms:
                 if not platform.isFirst and platform.hasEnemy:
                     enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
-                    enemy.rect.topleft = (platform.rect.centerx-30, platform.rect.top-42)
+                    enemy.rect.topleft = (platform.rect.centerx-30, platform.rect.top-50)
                 if not platform.isFirst and platform.hasWeapon:
                     sword.drawWeapon(platform.rect.centerx + 30, platform.rect.top-16, display)
                     sword.rect.topleft = (platform.rect.centerx + 30, platform.rect.top-16)
@@ -412,17 +412,17 @@ class StateManager():
                     testTrigger.action()
 
             for thisEnemy in enemy_list:
-                if thisEnemy.rect.colliderect(player.rect) and not thisEnemy.isAnimating:
+                if thisEnemy.rect.colliderect(player.rect):
                     player.blood -= 0.1
             for thisWeapon in weapon_list:
                 if player.rect.colliderect(thisWeapon):
                     player.animationDos()
                     player.weapon = sword
+                    thisWeapon.pickUp()
                     
             player.update()
-            enemy.update()
+            enemy_list.update()
             player.updateSprite()
-            enemy.updateSprite()
             if player.blood <= 0:
                 ingameSound.stop()
                 deathSound.play()

@@ -1,1 +1,1 @@
-{"firstPlaceName": "BRUH", "firstPlaceScore": 1194, "secondPlaceName": "AMOGUS", "secondPlaceScore": 1005, "thirdPlaceName": "SUSSIA", "thirdPlaceScore": 220, "fourthPlaceName": "BRUH", "fourthPlaceScore": 140, "fifthPlaceName": "KLENDI", "fifthPlaceScore": 120}
+{"firstPlaceName": "BRUH", "firstPlaceScore": 1194, "secondPlaceName": "AMOGUS", "secondPlaceScore": 1005, "thirdPlaceName": "BRUH", "thirdPlaceScore": 264, "fourthPlaceName": "SUSSIA", "fourthPlaceScore": 220, "fifthPlaceName": "BRUH", "fifthPlaceScore": 146}
