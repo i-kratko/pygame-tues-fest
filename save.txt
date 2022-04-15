@@ -1,1 +1,0 @@
-{"firstPlaceName": "BRUH", "firstPlaceScore": 1656, "secondPlaceName": "BRUH", "secondPlaceScore": 1194, "thirdPlaceName": "AMOGUS", "thirdPlaceScore": 1005, "fourthPlaceName": "BRUH", "fourthPlaceScore": 264, "fifthPlaceName": "SUSSIA", "fifthPlaceScore": 220}

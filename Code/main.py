@@ -18,7 +18,7 @@ from platform import Platform
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("Graphics/font.ttf", size)
 
-score = 0
+
 
 leaderboard = {
     'firstPlaceName' : "SUS",
@@ -42,6 +42,7 @@ class StateManager():
         self.level = 1
         self.finalScore = 1
         self.name = 'Br'
+        self.score = 0
 
     def leaderboard(self):
         gameOver = False
@@ -121,7 +122,7 @@ class StateManager():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     if PLAY_BUTTON.rect.collidepoint(pos):
-                        self.level = 2
+                        self.level = 5
                         mainMenuSound.stop()
                         ingameSound.play()
                         self.stateManager()
@@ -162,7 +163,7 @@ class StateManager():
                     pygame.quit()
                     exit()
                 if event.type == pygame.KEYDOWN:
-                    self.level = 5
+                    self.level = 1
                     self.stateManager()
 
 
@@ -177,6 +178,7 @@ class StateManager():
 
 
     def enterNameScreen(self):
+        print(self.finalScore)
         gameOver = False
         bgSurface = pygame.Surface((800,600))
         bgSurface.fill('Black')
@@ -201,16 +203,16 @@ class StateManager():
                         pygame.quit()
                         exit()
                 if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        self.level = 2
+                        self.name = thisName
+                        self.stateManager()
                     thisName += event.unicode
                     print(thisName)
                     NAME_TEXT = get_font(48).render(f'{thisName}', True, "#ffffff") 
                     NAME_TEXT_RECT = NAME_TEXT.get_rect()
                     NAME_TEXT_RECT.centerx = const.disW / 2 
-                    if event.key == pygame.K_RETURN:
-                        self.level = 1
-                        self.name = thisName
-                        self.checkIfRecrod()
-                        self.stateManager()
+                    
 
 
             display.blit(bgSurface,(0,0))
@@ -223,7 +225,7 @@ class StateManager():
             pygame.display.update()
             clock.tick(const.FPS)
 
-    def checkIfRecrod(self):
+    def checkIfRecrod(self, score, name):
         while 1:
             print("AMA VERNO")
             if score > leaderboard["fifthPlaceScore"]:
@@ -241,7 +243,7 @@ class StateManager():
                                 leaderboard["secondPlaceScore"] = leaderboard["firstPlaceScore"]
                                 leaderboard["secondPlaceName"] = leaderboard["firstPlaceName"]
                                 leaderboard["firstPlaceScore"] = int(score)
-                                leaderboard["firstPlaceName"] = self.name
+                                leaderboard["firstPlaceName"] = name
                                 break
                             #2 place
                             leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
@@ -251,7 +253,7 @@ class StateManager():
                             leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
                             leaderboard["thirdPlaceName"] = leaderboard["secondPlaceName"]
                             leaderboard["secondPlaceScore"] = int(score)
-                            leaderboard["secondPlaceName"] = self.name
+                            leaderboard["secondPlaceName"] = name
                             break
                         #3 place
                         leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
@@ -259,17 +261,17 @@ class StateManager():
                         leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
                         leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
                         leaderboard["thirdPlaceScore"] = int(score)
-                        leaderboard["thirdPlaceName"] = self.name
+                        leaderboard["thirdPlaceName"] = name
                         break
                     #4 place
                     leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
                     leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
                     leaderboard["fourthPlaceScore"] = int(score)
-                    leaderboard["fourthPlaceName"] = self.name
+                    leaderboard["fourthPlaceName"] = name
                     break
                 #5 place
                 leaderboard["fifthPlaceScore"] = int(score)
-                leaderboard["fifthPlaceName"] = self.name
+                leaderboard["fifthPlaceName"] = name
                 break
             break
 
@@ -312,10 +314,10 @@ class StateManager():
         playerGroup.add(player)
         blood_font = get_font(20)
         #score
-        score = 0
+        self.score = 0
         score_font = get_font(20)
         def display_score():
-            score_surface = score_font.render(f'Score:{int(score)}', True, const.white)
+            score_surface = score_font.render(f'Score:{int(self.score)}', True, const.white)
             score_rect = score_surface.get_rect(center=(700, 80))
             display.blit(score_surface, score_rect)
         def display_blood():
@@ -381,8 +383,8 @@ class StateManager():
                 ingameSound.stop()
                 deathSound.play()
                 self.level = 4
-                self.finalScore = score
-                self.checkIfRecrod()
+                self.finalScore = self.score
+                self.checkIfRecrod(self.finalScore, self.name)
                 saveData.saveData("Code\save.txt", leaderboard)
                 self.stateManager()
             for event in pygame.event.get():
@@ -399,7 +401,7 @@ class StateManager():
                                 heart.heartPicked = True
                             if player.blood < 100:
                                 player.blood += 6
-                            score += 10
+                            self.score += 10
                             heart.heartPicked = False
                 #KEYDOWN EVENTS
                 if event.type==spawn_platform:
@@ -450,9 +452,9 @@ class StateManager():
                 ingameSound.stop()
                 deathSound.play()
                 self.level = 4
-                self.finalScore = score
+                self.finalScore = self.score
+                self.checkIfRecrod(self.finalScore, self.name)
                 saveData.saveData("Code\save.txt", leaderboard)
-                self.checkIfRecrod()
                 self.stateManager()
             player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
@@ -465,9 +467,9 @@ class StateManager():
             display.blit(player.image,(player.rect.x, player.rect.y))
             #display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
-            if score > 14:
+            if self.score > 14:
                 player.blood -= 0.08
-            score += 0.04
+            self.score += 0.04
             #platform_list = move_platforms(platform_list) 
             platform_list.update()
             draw_platforms(platform_list)
