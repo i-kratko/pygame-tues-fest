@@ -18,6 +18,7 @@ def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("Graphics/font.ttf", size)
 
 score = 0
+name = "BRUH"
 
 leaderboard = {
     'firstPlaceName' : "SUS",
@@ -25,7 +26,11 @@ leaderboard = {
     'secondPlaceName' : "SUSSIA",
     'secondPlaceScore' : 21,
     'thirdPlaceName' : "KLENDI",
-    'thirdPlaceScore' : 1
+    'thirdPlaceScore' : 15,
+    'fourthPlaceName' : "4e6ma",
+    'fourthPlaceScore' : 10,
+    'fifthPlaceName' : "bancig",
+    'fifthPlaceScore' : 1
 }
 
 leaderboard = saveData.loadData("Code\save.txt")
@@ -284,22 +289,51 @@ class StateManager():
 
         def checkIfRecrod():
             while 1:
-                if score > leaderboard["thirdPlaceScore"]:
-                    if score > leaderboard["secondPlaceScore"]:
-                        if score > leaderboard["firstPlaceScore"]:
-                            leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
-                            leaderboard["secondPlaceScore"] = leaderboard["firstPlaceScore"]
-                            leaderboard["firstPlaceScore"] = int(self.finalScore)
-                            print(leaderboard["firstPlaceScore"])
+                if score > leaderboard["fifthPlaceScore"]:
+                    if score > leaderboard["fourthPlaceScore"]:
+                        if score > leaderboard["thirdPlaceScore"]:
+                            if score > leaderboard["secondPlaceScore"]:
+                                if score > leaderboard["firstPlaceScore"]:
+                                    #1 place
+                                    leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                                    leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                                    leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
+                                    leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
+                                    leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
+                                    leaderboard["thirdPlaceName"] = leaderboard["secondPlaceName"]
+                                    leaderboard["secondPlaceScore"] = leaderboard["firstPlaceScore"]
+                                    leaderboard["secondPlaceName"] = leaderboard["firstPlaceName"]
+                                    leaderboard["firstPlaceScore"] = score
+                                    leaderboard["firstPlaceName"] = name
+                                    break
+                                #2 place
+                                leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                                leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                                leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
+                                leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
+                                leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
+                                leaderboard["thirdPlaceName"] = leaderboard["secondPlaceName"]
+                                leaderboard["secondPlaceScore"] = score
+                                leaderboard["secondPlaceName"] = name
+                                break
+                            #3 place
+                            leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                            leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                            leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
+                            leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
+                            leaderboard["thirdPlaceScore"] = score
+                            leaderboard["thirdPlaceName"] = name
                             break
 
-                        leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
-                        leaderboard["secondPlaceScore"] = int(self.finalScore)
-                        print(leaderboard["secondPlaceScore"])
+                        #4 place
+                        leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                        leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                        leaderboard["fourthPlaceScore"] = score
+                        leaderboard["fourthPlaceName"] = name
                         break
-
-                    leaderboard["thirdPlaceScore"] = int(self.finalScore)
-                    print(leaderboard["thirdPlaceScore"])
+                    #5 place
+                    leaderboard["fifthPlaceScore"] = score
+                    leaderboard["fifthPlaceName"] = name
                     break
 
         while not gameOver:
