@@ -51,10 +51,20 @@ class StateManager():
 
         LEADERBOARD = get_font(69).render("LEADERBOARD", True, "#ffffff")
         FIRST_PLACE = get_font(30).render(f'#1 {leaderboard["firstPlaceName"]} {leaderboard["firstPlaceScore"]}', True, "#8a87b3")
+        FIRST_PLACE_RECT = FIRST_PLACE.get_rect()
+        FIRST_PLACE_RECT.centerx = const.disW / 2
         SECOND_PLACE = get_font(30).render(f'#2 {leaderboard["secondPlaceName"]} {leaderboard["secondPlaceScore"]}', True, "#c0fad0")
+        SECOND_PLACE_RECT = SECOND_PLACE.get_rect()
+        SECOND_PLACE_RECT.centerx = const.disW / 2
         THIRD_PLACE = get_font(30).render(f'#3 {leaderboard["thirdPlaceName"]} {leaderboard["thirdPlaceScore"]}', True, "#f7e57c")
+        THIRD_PLACE_RECT = THIRD_PLACE.get_rect()
+        THIRD_PLACE_RECT.centerx = const.disW / 2
         FOURTH_PLACE = get_font(30).render(f'#4 {leaderboard["fourthPlaceName"]} {leaderboard["fourthPlaceScore"]}', True, "#bcbdb9")
+        FOURTH_PLACE_RECT = FOURTH_PLACE.get_rect()
+        FOURTH_PLACE_RECT.centerx = const.disW / 2
         FIFTH_PLACE = get_font(30).render(f'#5 {leaderboard["fifthPlaceName"]} {leaderboard["fourthPlaceScore"]}', True, "#7d5f40")
+        FIFTH_PLACE_RECT = FIFTH_PLACE.get_rect()
+        FIFTH_PLACE_RECT.centerx = const.disW / 2
         BACK_BUTTON = Button(280, 450, const.backButtonPath)
 
         while not gameOver:
@@ -74,11 +84,11 @@ class StateManager():
 
             display.blit(bgSurface,(0,0))
             display.blit(LEADERBOARD, (25, 33))
-            display.blit(FIRST_PLACE, (20, 90))
-            display.blit(SECOND_PLACE, (20, 130))
-            display.blit(THIRD_PLACE, (20, 160))
-            display.blit(FOURTH_PLACE, (20, 190))
-            display.blit(FIFTH_PLACE, (20, 220))
+            display.blit(FIRST_PLACE, (FIRST_PLACE_RECT.x, 130))
+            display.blit(SECOND_PLACE, (SECOND_PLACE_RECT.x, 170))
+            display.blit(THIRD_PLACE, (THIRD_PLACE_RECT.x, 210))
+            display.blit(FOURTH_PLACE, (FOURTH_PLACE_RECT.x, 250))
+            display.blit(FIFTH_PLACE, (FIFTH_PLACE_RECT.x, 290))
             display.blit(BACK_BUTTON.image, (280, 450))
             pygame.display.update()
             clock.tick(const.FPS)
@@ -255,7 +265,7 @@ class StateManager():
             platform_y_position=random.choice(platform_height)
             if rand <= 55:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, True, False)
-                new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-56, const.enemySpritePath, 120)
+                new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 120)
                 enemy_list.add(new_enemy)
             if rand <=4 or rand >= 96:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False, True)
@@ -282,7 +292,7 @@ class StateManager():
             for platform in platforms:
                 if not platform.isFirst and platform.hasEnemy:
                     enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
-                    enemy.rect.topleft = (platform.rect.centerx-30, platform.rect.top-50)
+                    enemy.rect.topleft = (platform.rect.centerx-30, platform.rect.top-42)
                 if not platform.isFirst and platform.hasWeapon:
                     sword.drawWeapon(platform.rect.centerx + 30, platform.rect.top-16, display)
                     sword.rect.topleft = (platform.rect.centerx + 30, platform.rect.top-16)
@@ -412,17 +422,17 @@ class StateManager():
                     testTrigger.action()
 
             for thisEnemy in enemy_list:
-                if thisEnemy.rect.colliderect(player.rect):
+                if thisEnemy.rect.colliderect(player.rect) and not thisEnemy.isAnimating:
                     player.blood -= 0.1
             for thisWeapon in weapon_list:
                 if player.rect.colliderect(thisWeapon):
                     player.animationDos()
                     player.weapon = sword
-                    thisWeapon.pickUp()
                     
             player.update()
-            enemy_list.update()
+            enemy.update()
             player.updateSprite()
+            enemy.updateSprite()
             if player.blood <= 0:
                 ingameSound.stop()
                 deathSound.play()
@@ -442,7 +452,8 @@ class StateManager():
             display.blit(player.image,(player.rect.x, player.rect.y))
             #display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
-            player.blood -= 0.08
+            if score > 14:
+                player.blood -= 0.08
             score += 0.04
             #platform_list = move_platforms(platform_list) 
             platform_list.update()
