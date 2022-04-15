@@ -374,6 +374,8 @@ class StateManager():
                 deathSound.play()
                 self.level = 4
                 self.finalScore = score
+                saveData.saveData("Code\save.txt", leaderboard)
+                checkIfRecrod()
                 self.stateManager()
             player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
