@@ -6,7 +6,7 @@ FPS = 60
 playerMovement = 0
 gravity = 0.5
 isJumped = False
-spawn_platform_time=4000
+spawn_platform_time=3500
 enemyAnimationTime = 1500
 ##### COLORS #####
 black = [0, 0, 0]

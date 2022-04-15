@@ -75,6 +75,9 @@ class Player(pygame.sprite.Sprite):
         if  self.rect.x  < 1:
             self.x += 10
             self.velX = 0
+        if self.rect.y < 100:
+            self.y += 10
+            self.velY = 0
 
 
         #jumping
@@ -87,6 +90,6 @@ class Player(pygame.sprite.Sprite):
         self.x += self.velX
         self.y += self.velY
 
-        self.rect = pygame.Rect(int(self.x), int(self.y), 55, 56)        
+        self.rect = pygame.Rect(int(self.x), int(self.y), 56, 56)        
 
         

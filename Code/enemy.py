@@ -34,7 +34,7 @@ class Enemy(pygame.sprite.Sprite):
         self.health = health
 
     def update(self):
-            self.currentSprite += 0.16
+            self.currentSprite += 0.04
             if self.currentSprite >= len(self.sprites):
                 self.currentSprite = 0
             

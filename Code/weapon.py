@@ -20,8 +20,9 @@ class Weapon(pygame.sprite.Sprite):
     def drawWeapon(self, x, y, display):
         display.blit(self.image, (x,y))
 
-    def pickUp(self):
-        self.y = -420.69
+    def pickUp(self, player):
+        print("leko mi e bruh vol.2")
+        self.rect.y = -420.69
     
     def dealDamage(self, enemy):
         enemy.hitpoints -= self.damage

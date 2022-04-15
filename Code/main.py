@@ -226,7 +226,7 @@ class StateManager():
         platform_surface=pygame.image.load(const.platformPath)
         platform_surface=pygame.transform.scale(platform_surface, (178, 52))
         platform_list = pygame.sprite.Group()
-        platform_height= [205, 250, 295]
+        platform_height= [200, 225, 250, 275, 300]
         spawn_platform=pygame.USEREVENT 
         spawn_enemy=pygame.USEREVENT
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)    
@@ -265,7 +265,7 @@ class StateManager():
             platform_y_position=random.choice(platform_height)
             if rand <= 55:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, True, False)
-                new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 120)
+                new_enemy = Enemy(new_platform.rect.centerx-30, new_platform.rect.top-40, const.enemySpritePath, 120)
                 enemy_list.add(new_enemy)
             if rand <=4 or rand >= 96:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False, True)
@@ -282,7 +282,7 @@ class StateManager():
         def move_enemy(enemies):
             for enemy in enemies:
                 enemy.rect.x-=2
-                enemy.drawEnemy(enemy.rect.x-37, enemy.rect.y, display)
+                enemy.drawEnemy(enemy.rect.x, enemy.rect.y-20, display)
             return enemies
         def move_weapon(weapons):
             for weapon in weapons:
@@ -291,8 +291,8 @@ class StateManager():
         def draw_platforms(platforms):
             for platform in platforms:
                 if not platform.isFirst and platform.hasEnemy:
-                    enemy.drawEnemy(platform.rect.centerx-36, platform.rect.top-42, display)
-                    enemy.rect.topleft = (platform.rect.centerx-30, platform.rect.top-42)
+                    enemy.drawEnemy(platform.rect.centerx-59, platform.rect.top-20, display)
+                    enemy.rect.topleft = (platform.rect.centerx-50, platform.rect.top-20)
                 if not platform.isFirst and platform.hasWeapon:
                     sword.drawWeapon(platform.rect.centerx + 30, platform.rect.top-16, display)
                     sword.rect.topleft = (platform.rect.centerx + 30, platform.rect.top-16)
@@ -422,17 +422,17 @@ class StateManager():
                     testTrigger.action()
 
             for thisEnemy in enemy_list:
-                if thisEnemy.rect.colliderect(player.rect) and not thisEnemy.isAnimating:
+                if thisEnemy.rect.colliderect(player.rect):
                     player.blood -= 0.1
             for thisWeapon in weapon_list:
                 if player.rect.colliderect(thisWeapon):
                     player.animationDos()
                     player.weapon = sword
-                    
+                    thisWeapon.pickUp(player)
+
             player.update()
-            enemy.update()
+            enemy_list.update()
             player.updateSprite()
-            enemy.updateSprite()
             if player.blood <= 0:
                 ingameSound.stop()
                 deathSound.play()
