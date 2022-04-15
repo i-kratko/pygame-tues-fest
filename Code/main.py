@@ -51,10 +51,20 @@ class StateManager():
 
         LEADERBOARD = get_font(69).render("LEADERBOARD", True, "#ffffff")
         FIRST_PLACE = get_font(30).render(f'#1 {leaderboard["firstPlaceName"]} {leaderboard["firstPlaceScore"]}', True, "#8a87b3")
+        FIRST_PLACE_RECT = FIRST_PLACE.get_rect()
+        FIRST_PLACE_RECT.centerx = const.disW / 2
         SECOND_PLACE = get_font(30).render(f'#2 {leaderboard["secondPlaceName"]} {leaderboard["secondPlaceScore"]}', True, "#c0fad0")
+        SECOND_PLACE_RECT = SECOND_PLACE.get_rect()
+        SECOND_PLACE_RECT.centerx = const.disW / 2
         THIRD_PLACE = get_font(30).render(f'#3 {leaderboard["thirdPlaceName"]} {leaderboard["thirdPlaceScore"]}', True, "#f7e57c")
+        THIRD_PLACE_RECT = THIRD_PLACE.get_rect()
+        THIRD_PLACE_RECT.centerx = const.disW / 2
         FOURTH_PLACE = get_font(30).render(f'#4 {leaderboard["fourthPlaceName"]} {leaderboard["fourthPlaceScore"]}', True, "#bcbdb9")
+        FOURTH_PLACE_RECT = FOURTH_PLACE.get_rect()
+        FOURTH_PLACE_RECT.centerx = const.disW / 2
         FIFTH_PLACE = get_font(30).render(f'#5 {leaderboard["fifthPlaceName"]} {leaderboard["fourthPlaceScore"]}', True, "#7d5f40")
+        FIFTH_PLACE_RECT = FIFTH_PLACE.get_rect()
+        FIFTH_PLACE_RECT.centerx = const.disW / 2
         BACK_BUTTON = Button(280, 450, const.backButtonPath)
 
         while not gameOver:
@@ -74,11 +84,11 @@ class StateManager():
 
             display.blit(bgSurface,(0,0))
             display.blit(LEADERBOARD, (25, 33))
-            display.blit(FIRST_PLACE, (20, 100))
-            display.blit(SECOND_PLACE, (20, 130))
-            display.blit(THIRD_PLACE, (20, 160))
-            display.blit(FOURTH_PLACE, (20, 190))
-            display.blit(FIFTH_PLACE, (20, 220))
+            display.blit(FIRST_PLACE, (FIRST_PLACE_RECT.x, 130))
+            display.blit(SECOND_PLACE, (SECOND_PLACE_RECT.x, 170))
+            display.blit(THIRD_PLACE, (THIRD_PLACE_RECT.x, 210))
+            display.blit(FOURTH_PLACE, (FOURTH_PLACE_RECT.x, 250))
+            display.blit(FIFTH_PLACE, (FIFTH_PLACE_RECT.x, 290))
             display.blit(BACK_BUTTON.image, (280, 450))
             pygame.display.update()
             clock.tick(const.FPS)
