@@ -19,6 +19,7 @@ def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("Graphics/font.ttf", size)
 
 score = 0
+name = "BRUH"
 
 leaderboard = {
     'firstPlaceName' : "SUS",
@@ -26,7 +27,11 @@ leaderboard = {
     'secondPlaceName' : "SUSSIA",
     'secondPlaceScore' : 21,
     'thirdPlaceName' : "KLENDI",
-    'thirdPlaceScore' : 1
+    'thirdPlaceScore' : 15,
+    'fourthPlaceName' : "4e6ma",
+    'fourthPlaceScore' : 10,
+    'fifthPlaceName' : "bancig",
+    'fifthPlaceScore' : 1
 }
 
 leaderboard = saveData.loadData("Code\save.txt")
@@ -42,8 +47,14 @@ class StateManager():
         gameOver = False
 
         bgSurface = pygame.Surface((800,600))
-        bgSurface.fill('Green')
+        bgSurface.fill('Black')
 
+        LEADERBOARD = get_font(69).render("LEADERBOARD", True, "#ffffff")
+        FIRST_PLACE = get_font(30).render(f'#1 {leaderboard["firstPlaceName"]} {leaderboard["firstPlaceScore"]}', True, "#8a87b3")
+        SECOND_PLACE = get_font(30).render(f'#2 {leaderboard["secondPlaceName"]} {leaderboard["secondPlaceScore"]}', True, "#c0fad0")
+        THIRD_PLACE = get_font(30).render(f'#3 {leaderboard["thirdPlaceName"]} {leaderboard["thirdPlaceScore"]}', True, "#f7e57c")
+        FOURTH_PLACE = get_font(30).render(f'#4 {leaderboard["fourthPlaceName"]} {leaderboard["fourthPlaceScore"]}', True, "#bcbdb9")
+        FIFTH_PLACE = get_font(30).render(f'#5 {leaderboard["fifthPlaceName"]} {leaderboard["fourthPlaceScore"]}', True, "#7d5f40")
         BACK_BUTTON = Button(280, 450, const.backButtonPath)
 
         while not gameOver:
@@ -62,6 +73,12 @@ class StateManager():
                         self.stateManager()
 
             display.blit(bgSurface,(0,0))
+            display.blit(LEADERBOARD, (25, 33))
+            display.blit(FIRST_PLACE, (20, 100))
+            display.blit(SECOND_PLACE, (20, 130))
+            display.blit(THIRD_PLACE, (20, 160))
+            display.blit(FOURTH_PLACE, (20, 190))
+            display.blit(FIFTH_PLACE, (20, 220))
             display.blit(BACK_BUTTON.image, (280, 450))
             pygame.display.update()
             clock.tick(const.FPS)
@@ -287,23 +304,54 @@ class StateManager():
 
         def checkIfRecrod():
             while 1:
-                if score > leaderboard["thirdPlaceScore"]:
-                    if score > leaderboard["secondPlaceScore"]:
-                        if score > leaderboard["firstPlaceScore"]:
-                            leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
-                            leaderboard["secondPlaceScore"] = leaderboard["firstPlaceScore"]
-                            leaderboard["firstPlaceScore"] = int(self.finalScore)
-                            print(leaderboard["firstPlaceScore"])
+                print("AMA VERNO")
+                if score > leaderboard["fifthPlaceScore"]:
+                    if score > leaderboard["fourthPlaceScore"]:
+                        if score > leaderboard["thirdPlaceScore"]:
+                            if score > leaderboard["secondPlaceScore"]:
+                                if score > leaderboard["firstPlaceScore"]:
+                                    #1 place
+                                    leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                                    leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                                    leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
+                                    leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
+                                    leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
+                                    leaderboard["thirdPlaceName"] = leaderboard["secondPlaceName"]
+                                    leaderboard["secondPlaceScore"] = leaderboard["firstPlaceScore"]
+                                    leaderboard["secondPlaceName"] = leaderboard["firstPlaceName"]
+                                    leaderboard["firstPlaceScore"] = int(score)
+                                    leaderboard["firstPlaceName"] = name
+                                    break
+                                #2 place
+                                leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                                leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                                leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
+                                leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
+                                leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
+                                leaderboard["thirdPlaceName"] = leaderboard["secondPlaceName"]
+                                leaderboard["secondPlaceScore"] = int(score)
+                                leaderboard["secondPlaceName"] = name
+                                break
+                            #3 place
+                            leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                            leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                            leaderboard["fourthPlaceScore"] = leaderboard["thirdPlaceScore"]
+                            leaderboard["fourthPlaceName"] = leaderboard["thirdPlaceName"]
+                            leaderboard["thirdPlaceScore"] = int(score)
+                            leaderboard["thirdPlaceName"] = name
                             break
 
-                        leaderboard["thirdPlaceScore"] = leaderboard["secondPlaceScore"]
-                        leaderboard["secondPlaceScore"] = int(self.finalScore)
-                        print(leaderboard["secondPlaceScore"])
+                        #4 place
+                        leaderboard["fifthPlaceScore"] = leaderboard["fourthPlaceScore"]
+                        leaderboard["fifthPlaceName"] = leaderboard["fourthPlaceName"]
+                        leaderboard["fourthPlaceScore"] = int(score)
+                        leaderboard["fourthPlaceName"] = name
                         break
-
-                    leaderboard["thirdPlaceScore"] = int(self.finalScore)
-                    print(leaderboard["thirdPlaceScore"])
+                    #5 place
+                    leaderboard["fifthPlaceScore"] = int(score)
+                    leaderboard["fifthPlaceName"] = name
                     break
+                break
 
         while not gameOver:
             if player.rect.y > 569:
