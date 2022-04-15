@@ -452,7 +452,8 @@ class StateManager():
             display.blit(player.image,(player.rect.x, player.rect.y))
             #display.blit(boss.image, (boss.rect.x, boss.rect.y))
             display_score()
-            player.blood -= 0.08
+            if score > 14:
+                player.blood -= 0.08
             score += 0.04
             #platform_list = move_platforms(platform_list) 
             platform_list.update()
