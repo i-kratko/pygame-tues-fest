@@ -30,6 +30,7 @@ gameBackgroundPath = "Graphics/backgrounds/GameBackground.png"
 platformSpritePath = "Graphics/Platform.png"
 platformPath="Graphics/Platform2.png"
 floorPath="Graphics/loop.png"
+heartPath="Graphics/Surcesuuuuuuiiiiiiiiiiiii.png"
 ##### LEADERBOARD ######
 firstPlaceName = "VESKO"
 firstPlaceScore = 0

@@ -1,1 +1,1 @@
-{"firstPlaceName": "AMOGUS", "firstPlaceScore": 220, "secondPlaceName": "SUSSIA", "secondPlaceScore": 120, "thirdPlaceName": "KLENDI", "thirdPlaceScore": 111}
+{"firstPlaceName": "AMOGUS", "firstPlaceScore": 235, "secondPlaceName": "SUSSIA", "secondPlaceScore": 232, "thirdPlaceName": "KLENDI", "thirdPlaceScore": 121}

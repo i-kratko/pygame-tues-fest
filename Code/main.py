@@ -11,6 +11,7 @@ from player import Player
 from button import Button
 from trigger import Trigger
 from enemy import Enemy
+from health import Health
 from random import randint
 from platform import Platform
 
@@ -198,7 +199,7 @@ class StateManager():
         platform_surface=pygame.image.load(const.platformPath)
         platform_surface=pygame.transform.scale(platform_surface, (178, 52))
         platform_list = pygame.sprite.Group()
-        platform_height= [190, 250, 310]
+        platform_height= [205, 250, 295]
         spawn_platform=pygame.USEREVENT 
         spawn_enemy=pygame.USEREVENT
         pygame.time.set_timer(spawn_platform, const.spawn_platform_time)    
@@ -212,6 +213,8 @@ class StateManager():
         sword = Weapon(350,418, const.swordSpritePath, 20)
         player = Player(40, 100, const.playerSpritePath, 100, dagger)
         enemy = Enemy(500, 392, const.enemySpritePath, 120)
+        heart = Health(100,100, const.heartPath, 20, False)
+        heart_list = pygame.sprite.Group()
         enemy_list = pygame.sprite.Group()
         weapon_list = pygame.sprite.Group()
         sword_list = pygame.sprite.Group()
@@ -237,7 +240,7 @@ class StateManager():
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, True, False)
                 new_enemy = Enemy(new_platform.rect.centerx, new_platform.rect.top-42, const.enemySpritePath, 120)
                 enemy_list.add(new_enemy)
-            if rand <=95 or rand >= 96:
+            if rand <=4 or rand >= 96:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False, True)
                 new_weapon = Weapon(new_platform.rect.centerx + 30, new_platform.rect.top-16, const.swordSpritePath, 100)
                 weapon_list.add(new_weapon)
@@ -321,9 +324,12 @@ class StateManager():
                         if player.rect.colliderect(thisEnemy.rect) and not thisEnemy.health <= 0:
                             print("bruhhhhhhhhh")
                             thisEnemy.takeDamage(player)
+                            if thisEnemy.health <= 0:
+                                heart.heartPicked = True
                             if player.blood < 100:
                                 player.blood += 6
                             score += 10
+                            heart.heartPicked = False
                 #KEYDOWN EVENTS
                 if event.type==spawn_platform:
                     platform_list.add(create_platform())
@@ -364,7 +370,7 @@ class StateManager():
                 if player.rect.colliderect(thisWeapon):
                     player.animationDos()
                     player.weapon = sword
-                    weapon_list.remove(thisWeapon)
+                    
             player.update()
             enemy.update()
             player.updateSprite()
@@ -379,6 +385,9 @@ class StateManager():
                 self.stateManager()
             player.rect.centery += const.playerMovement
             display.blit(bgScaled, (0, 0))
+
+            if heart.heartPicked == True:
+                display.blit (heart.image, (thisEnemy.x + 20, thisEnemy.y))
 
             checkPlatformCollisionWithPLayer(platform_list)
 
@@ -422,7 +431,7 @@ ingameSound = pygame.mixer.Sound("Audio/ingame.wav")
 deathSound.set_volume(0.5)
 mainMenuSound.set_volume(0.06)
 ingameSound.set_volume(0.035)
-display = pygame.display.set_mode((const.disW, const.disH), pygame.FULLSCREEN)
+display = pygame.display.set_mode((const.disW, const.disH))
 pygame.display.set_caption(const.gameName)
 clock = pygame.time.Clock()
      
