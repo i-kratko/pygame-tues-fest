@@ -22,7 +22,7 @@ class Weapon(pygame.sprite.Sprite):
 
     def pickUp(self, player):
         print("leko mi e bruh vol.2")
-        self.rect.y = -420.69
+        self.rect.y = -400
     
     def dealDamage(self, enemy):
         enemy.hitpoints -= self.damage

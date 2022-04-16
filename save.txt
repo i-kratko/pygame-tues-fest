@@ -1,0 +1,1 @@
+{"firstPlaceName": "liubakis", "firstPlaceScore": 580, "secondPlaceName": "dada", "secondPlaceScore": 482, "thirdPlaceName": "BRUH", "thirdPlaceScore": 5, "fourthPlaceName": "AMOGUS", "fourthPlaceScore": 4, "fifthPlaceName": "BRUH", "fifthPlaceScore": 3}

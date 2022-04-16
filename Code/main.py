@@ -443,7 +443,7 @@ class StateManager():
                 if player.rect.colliderect(thisWeapon):
                     player.animationDos()
                     player.weapon = sword
-                    thisWeapon.pickUp(player)
+                    thisWeapon.picgkUp(player)
 
             player.update()
             enemy_list.update()
