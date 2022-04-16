@@ -10,6 +10,7 @@ class Weapon(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load(spritePath)
         self.image = pygame.transform.scale(self.image, (28, 30))
+        self.susImage = pygame.image.load("Graphics/Nikeci.png")
         self.rect = self.image.get_rect()
         self.x = int(x)
         self.y = int(y)
@@ -17,12 +18,15 @@ class Weapon(pygame.sprite.Sprite):
         self.rect.y = self.y
         self.damage = int(damage)
     
+    def update(self):
+        self.rect.y = int(self.y)
+
     def drawWeapon(self, x, y, display):
         display.blit(self.image, (x,y))
 
-    def pickUp(self, player):
+    def pickUp(self):
         print("leko mi e bruh vol.2")
-        self.rect.y = -400
+        self.y = -469
     
     def dealDamage(self, enemy):
         enemy.hitpoints -= self.damage

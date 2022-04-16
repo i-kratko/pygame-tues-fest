@@ -19,7 +19,6 @@ def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("Graphics/font.ttf", size)
 
 
-
 leaderboard = {
     'firstPlaceName' : "SUS",
     'firstPlaceScore' : 30,
@@ -331,7 +330,7 @@ class StateManager():
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, True, False)
                 new_enemy = Enemy(new_platform.rect.centerx-30, new_platform.rect.top-40, const.enemySpritePath, 120)
                 enemy_list.add(new_enemy)
-            if rand <=4 or rand >= 96:
+            if rand <=95 or rand >= 96:
                 new_platform = Platform(900, platform_y_position, const.platformSpritePath, False, False, True)
                 new_weapon = Weapon(new_platform.rect.centerx + 30, new_platform.rect.top-16, const.swordSpritePath, 100)
                 weapon_list.add(new_weapon)
@@ -443,11 +442,16 @@ class StateManager():
                 if player.rect.colliderect(thisWeapon):
                     player.animationDos()
                     player.weapon = sword
-                    thisWeapon.picgkUp(player)
+                    thisWeapon.pickUp()
+                    if 1:
+                        thisWeapon.rect.x = -400
+                        print("killed")
 
-            player.update()
+            
             enemy_list.update()
+            player.update()
             player.updateSprite()
+            weapon_list.update()
             if player.blood <= 0:
                 ingameSound.stop()
                 deathSound.play()
@@ -505,7 +509,7 @@ ingameSound = pygame.mixer.Sound("Audio/ingame.wav")
 deathSound.set_volume(0.5)
 mainMenuSound.set_volume(0.06)
 ingameSound.set_volume(0.035)
-display = pygame.display.set_mode((const.disW, const.disH))
+display = pygame.display.set_mode((const.disW, const.disH), pygame.FULLSCREEN)
 pygame.display.set_caption(const.gameName)
 clock = pygame.time.Clock()
      
